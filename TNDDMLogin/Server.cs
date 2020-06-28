@@ -13,6 +13,9 @@ namespace TNDDMLogin
 
         public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
 
+        public delegate void PacketHandler(int fromClient, Packet packet);
+        public static Dictionary<int, PacketHandler> packetHandlers;
+
         private static TcpListener tcpListener;
 
         public static void StartServer(int maxPlayers ,int port)
@@ -55,6 +58,11 @@ namespace TNDDMLogin
             {
                 clients.Add(i, new Client(i));
             }
+
+            packetHandlers = new Dictionary<int, PacketHandler>()
+            {
+                {(int)ClientPackets.welcomeReceived , ServerHandle.WelcomeReceived }
+            };
         }
     }
 }
