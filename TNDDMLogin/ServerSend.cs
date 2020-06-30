@@ -28,7 +28,7 @@ namespace TNDDMLogin
 
         public static void Welcome(int toClient , string message)
         {
-            using(Packet packet = new Packet((int)ServerPackets.welcome))
+            using(Packet packet = new Packet((int)ServerPackets.Welcome))
             {
                 packet.Write(message);
                 packet.Write(toClient);

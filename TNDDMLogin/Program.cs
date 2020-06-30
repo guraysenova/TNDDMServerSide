@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace TNDDMLogin
@@ -19,6 +18,7 @@ namespace TNDDMLogin
 
             Server.StartServer(100, 26950);
 
+            //Console.WriteLine(TokenGenerator.GetNewToken());
         }
 
         private static void MainThread()

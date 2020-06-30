@@ -61,7 +61,7 @@ namespace TNDDMLogin
 
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
-                {(int)ClientPackets.welcomeReceived , ServerHandle.WelcomeReceived }
+                {(int)ClientPackets.WelcomeReceived , ServerHandle.WelcomeReceived }
             };
         }
     }
