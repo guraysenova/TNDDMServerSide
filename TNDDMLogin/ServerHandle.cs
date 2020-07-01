@@ -17,7 +17,9 @@ namespace TNDDMLogin
                 Console.WriteLine($"Player \"{username}\" (ID: {fromClient}) has assumed the wrong client ID");
             }
 
-            // TODO: send player into game?
+            string token = TokenGenerator.GetNewToken();
+
+            // TODO: add token to database , send player to new server
         }
     }
 }
