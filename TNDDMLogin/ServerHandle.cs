@@ -19,6 +19,7 @@ namespace TNDDMLogin
 
             string token = TokenGenerator.GetNewToken();
 
+            Console.WriteLine(token);
             // TODO: add token to database , send player to new server
         }
     }

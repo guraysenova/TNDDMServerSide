@@ -18,7 +18,6 @@ namespace TNDDMMainServer
             mainThread.Start();
 
             Server.StartServer(100, 26951);
-
         }
 
         private static void MainThread()

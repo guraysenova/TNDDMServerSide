@@ -17,8 +17,6 @@ namespace TNDDMLogin
             mainThread.Start();
 
             Server.StartServer(100, 26950);
-
-            //Console.WriteLine(TokenGenerator.GetNewToken());
         }
 
         private static void MainThread()
