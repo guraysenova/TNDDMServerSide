@@ -1,7 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TNDDMMainServer
 {
@@ -14,7 +12,6 @@ namespace TNDDMMainServer
             mySqlConnection.Open();
 
             MySqlCommand command = new MySqlCommand($"DELETE FROM token.tokens WHERE username='{username}'", mySqlConnection);
-
 
             try
             {
@@ -30,7 +27,6 @@ namespace TNDDMMainServer
             }
             catch (Exception exception)
             {
-
                 Console.WriteLine(exception);
             }
 
@@ -58,7 +54,6 @@ namespace TNDDMMainServer
             }
             catch (Exception exception)
             {
-
                 Console.WriteLine(exception);
             }
 
@@ -69,7 +64,6 @@ namespace TNDDMMainServer
         public bool IsTokenValid(string username , string token)
         {
             bool isValid = false;
-
 
             MySqlConnection mySqlConnection = new MySqlConnection("datasource=localhost;port=3306;username=root;password=");
 
@@ -82,7 +76,7 @@ namespace TNDDMMainServer
             try
             {
                 mySqlDataReader = command.ExecuteReader();
-                if (mySqlDataReader.Read() && String.Equals(mySqlDataReader.GetString("token"), token, StringComparison.OrdinalIgnoreCase))
+                if (mySqlDataReader.Read() && String.Equals(mySqlDataReader.GetString("token"), token))
                 {
                     isValid = true;
                 }
@@ -97,7 +91,6 @@ namespace TNDDMMainServer
             }
 
             mySqlConnection.Close();
-
 
             return isValid;
         }
