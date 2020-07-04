@@ -18,6 +18,10 @@ namespace TNDDMMainServer
             mainThread.Start();
 
             Server.StartServer(100, 26951);
+
+            TokenManager tokenManager = new TokenManager();
+            Console.WriteLine(tokenManager.IsTokenValid("Guray", "Token").ToString());
+            tokenManager.RefreshDataBase();
         }
 
         private static void MainThread()
