@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace TNDDMMainServer
 {
-    class TokenManager
+    static class TokenManager
     {
-        public void RemoveToken(string token)
+        public static void RemoveToken(string token)
         {
             MySqlConnection mySqlConnection = new MySqlConnection("datasource=localhost;port=3306;username=root;password=");
 
@@ -34,7 +34,7 @@ namespace TNDDMMainServer
             mySqlConnection.Close();
         }
 
-        public void AddToken(string username , string token)
+        public static void AddToken(string username, string token)
         {
             RefreshDataBase();
 
@@ -64,7 +64,7 @@ namespace TNDDMMainServer
         }
 
 
-        public bool IsTokenValid(string username , string token)
+        public static bool IsTokenValid(string username, string token)
         {
             RefreshDataBase();
 
@@ -74,25 +74,27 @@ namespace TNDDMMainServer
 
             mySqlConnection.Open();
 
-            MySqlCommand command = new MySqlCommand($"SELECT * FROM token.tokens WHERE username='{username}'", mySqlConnection);
+            MySqlCommand command = new MySqlCommand($"SELECT * FROM token.tokens WHERE token='{token}'", mySqlConnection);
 
             MySqlDataReader mySqlDataReader;
 
             try
             {
                 mySqlDataReader = command.ExecuteReader();
-                if (mySqlDataReader.Read() && 
+                if (mySqlDataReader.Read() &&
                     String.Equals(mySqlDataReader.GetString("token"), token) &&
+                    String.Equals(mySqlDataReader.GetString("username"), username) &&
                     (DateTime.Now - mySqlDataReader.GetDateTime("time")).TotalSeconds < 30.0)
                 {
                     isValid = true;
+                    RemoveToken(token);
                 }
                 else
                 {
                     isValid = false;
                 }
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 Console.WriteLine(exception);
             }
@@ -103,7 +105,7 @@ namespace TNDDMMainServer
         }
 
 
-        public void RefreshDataBase()
+        public static void RefreshDataBase()
         {
             List<string> tokensToRemove = new List<string>();
 
@@ -113,14 +115,14 @@ namespace TNDDMMainServer
 
             MySqlCommand command = new MySqlCommand($"SELECT time, username, token FROM token.tokens", mySqlConnection);
 
-            using(MySqlDataReader mySqlDataReader = command.ExecuteReader())
+            using (MySqlDataReader mySqlDataReader = command.ExecuteReader())
             {
                 while (mySqlDataReader.Read())
                 {
-                    if((DateTime.Now - mySqlDataReader.GetDateTime("time")).TotalSeconds >= 30.0)
+                    if ((DateTime.Now - mySqlDataReader.GetDateTime("time")).TotalSeconds >= 30.0)
                     {
                         tokensToRemove.Add(mySqlDataReader.GetString("token"));
-                    }  
+                    }
                 }
             }
 

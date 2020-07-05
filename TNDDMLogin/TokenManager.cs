@@ -75,7 +75,7 @@ namespace TNDDMLogin
 
             mySqlConnection.Open();
 
-            MySqlCommand command = new MySqlCommand($"SELECT * FROM token.tokens WHERE username='{username}'", mySqlConnection);
+            MySqlCommand command = new MySqlCommand($"SELECT * FROM token.tokens WHERE token='{token}'", mySqlConnection);
 
             MySqlDataReader mySqlDataReader;
 
@@ -84,9 +84,11 @@ namespace TNDDMLogin
                 mySqlDataReader = command.ExecuteReader();
                 if (mySqlDataReader.Read() &&
                     String.Equals(mySqlDataReader.GetString("token"), token) &&
+                    String.Equals(mySqlDataReader.GetString("username"), username) &&
                     (DateTime.Now - mySqlDataReader.GetDateTime("time")).TotalSeconds < 30.0)
                 {
                     isValid = true;
+                    RemoveToken(token);
                 }
                 else
                 {
