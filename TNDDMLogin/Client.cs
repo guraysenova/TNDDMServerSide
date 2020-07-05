@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using System.Numerics;
 
 namespace TNDDMLogin
 {
@@ -12,11 +13,13 @@ namespace TNDDMLogin
 
         public int id;
         public TCP tcp;
+        //public UDP udp;
 
-        public Client(int clientId)
+        public Client(int _clientId)
         {
-            id = clientId;
+            id = _clientId;
             tcp = new TCP(id);
+            //udp = new UDP(id);
         }
 
         public class TCP
@@ -24,125 +27,147 @@ namespace TNDDMLogin
             public TcpClient socket;
 
             private readonly int id;
-
             private NetworkStream stream;
-
             private Packet receivedData;
-
             private byte[] receiveBuffer;
 
-            public TCP(int idVal)
+            public TCP(int _id)
             {
-                id = idVal;
+                id = _id;
             }
 
-            public void Connect(TcpClient socketVal)
+            /// <summary>Initializes the newly connected client's TCP-related info.</summary>
+            /// <param name="_socket">The TcpClient instance of the newly connected client.</param>
+            public void Connect(TcpClient _socket)
             {
-                socket = socketVal;
+                socket = _socket;
                 socket.ReceiveBufferSize = dataBufferSize;
                 socket.SendBufferSize = dataBufferSize;
 
                 stream = socket.GetStream();
 
                 receivedData = new Packet();
-
                 receiveBuffer = new byte[dataBufferSize];
 
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
 
-                ServerSend.Welcome(id, "Welcome to the TNDDM server");
+                ServerSend.Welcome(id, "Welcome to the server!");
             }
 
-            public void SendData(Packet packet)
+            /// <summary>Sends data to the client via TCP.</summary>
+            /// <param name="_packet">The packet to send.</param>
+            public void SendData(Packet _packet)
             {
                 try
                 {
-                    if(socket != null)
+                    if (socket != null)
                     {
-                        stream.BeginWrite(packet.ToArray() , 0 , packet.Length() , null , null);
+                        stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null); // Send data to appropriate client
                     }
                 }
-                catch(Exception exception)
+                catch (Exception _ex)
                 {
-                    Console.WriteLine($"Error sending data to player {id} via TCP : {exception}");
+                    Console.WriteLine($"Error sending data to player {id} via TCP: {_ex}");
                 }
             }
 
-            private void ReceiveCallback(IAsyncResult result)
+            /// <summary>Reads incoming data from the stream.</summary>
+            private void ReceiveCallback(IAsyncResult _result)
             {
                 try
                 {
-                    int byteLength = stream.EndRead(result);
-                    if(byteLength <= 0)
+                    int _byteLength = stream.EndRead(_result);
+                    if (_byteLength <= 0)
                     {
-                        // TODO: Disconnect client.
-
+                        Server.clients[id].Disconnect();
                         return;
                     }
 
-                    byte[] data = new byte[byteLength];
-                    Array.Copy(receiveBuffer, data, byteLength);
+                    byte[] _data = new byte[_byteLength];
+                    Array.Copy(receiveBuffer, _data, _byteLength);
 
-                    // TODO: Handle data.
-
-                    receivedData.Reset(HandleData(data));
-
-
+                    receivedData.Reset(HandleData(_data)); // Reset receivedData if all data was handled
                     stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
                 }
-                catch(Exception exception)
+                catch (Exception _ex)
                 {
-                    Console.Write($"Error receiving TCP data: {exception}");
-                    // TODO: Disconnect client.
-
+                    Console.WriteLine($"Error receiving TCP data: {_ex}");
+                    Server.clients[id].Disconnect();
                 }
             }
 
-            private bool HandleData(byte[] data)
+            /// <summary>Prepares received data to be used by the appropriate packet handler methods.</summary>
+            /// <param name="_data">The recieved data.</param>
+            private bool HandleData(byte[] _data)
             {
-                int packetLength = 0;
+                int _packetLength = 0;
 
-                receivedData.SetBytes(data);
+                receivedData.SetBytes(_data);
 
                 if (receivedData.UnreadLength() >= 4)
                 {
-                    packetLength = receivedData.ReadInt();
-                    if (packetLength <= 0)
+                    // If client's received data contains a packet
+                    _packetLength = receivedData.ReadInt();
+                    if (_packetLength <= 0)
                     {
-                        return true;
+                        // If packet contains no data
+                        return true; // Reset receivedData instance to allow it to be reused
                     }
                 }
 
-                while (packetLength > 0 && packetLength <= receivedData.UnreadLength())
+                while (_packetLength > 0 && _packetLength <= receivedData.UnreadLength())
                 {
-                    byte[] packetBytes = receivedData.ReadBytes(packetLength);
+                    // While packet contains data AND packet data length doesn't exceed the length of the packet we're reading
+                    byte[] _packetBytes = receivedData.ReadBytes(_packetLength);
                     ThreadManager.ExecuteOnMainThread(() =>
                     {
-                        using (Packet packet = new Packet(packetBytes))
+                        using (Packet _packet = new Packet(_packetBytes))
                         {
-                            int packetId = packet.ReadInt();
-                            Server.packetHandlers[packetId](id , packet);
+                            int _packetId = _packet.ReadInt();
+                            Server.packetHandlers[_packetId](id, _packet); // Call appropriate method to handle the packet
                         }
                     });
 
-                    packetLength = 0;
-
+                    _packetLength = 0; // Reset packet length
                     if (receivedData.UnreadLength() >= 4)
                     {
-                        packetLength = receivedData.ReadInt();
-                        if (packetLength <= 0)
+                        // If client's received data contains another packet
+                        _packetLength = receivedData.ReadInt();
+                        if (_packetLength <= 0)
                         {
-                            return true;
+                            // If packet contains no data
+                            return true; // Reset receivedData instance to allow it to be reused
                         }
                     }
                 }
 
-                if (packetLength <= 1)
+                if (_packetLength <= 1)
                 {
-                    return true;
+                    return true; // Reset receivedData instance to allow it to be reused
                 }
+
                 return false;
             }
+
+            /// <summary>Closes and cleans up the TCP connection.</summary>
+            public void Disconnect()
+            {
+                socket.Close();
+                stream = null;
+                receivedData = null;
+                receiveBuffer = null;
+                socket = null;
+            }
+        }
+
+
+        /// <summary>Disconnects the client and stops all network traffic.</summary>
+        private void Disconnect()
+        {
+            Console.WriteLine($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
+
+            tcp.Disconnect();
+
         }
     }
 }

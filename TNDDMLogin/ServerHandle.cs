@@ -19,8 +19,9 @@ namespace TNDDMLogin
 
             string token = TokenGenerator.GetNewToken();
 
-            Console.WriteLine(token);
-            // TODO: add token to database , send player to new server
+            TokenManager.AddToken(username, token);
+
+            ServerSend.Token(fromClient , token, "127.0.0.1", 26951);
         }
     }
 }

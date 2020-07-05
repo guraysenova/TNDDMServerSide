@@ -36,5 +36,18 @@ namespace TNDDMLogin
                 SendTCPData(toClient, packet);
             }
         }
+
+        public static void Token(int toClient , string token , string ip , int port)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.Token))
+            {
+                packet.Write(token);
+                packet.Write(ip);
+                packet.Write(port);
+                packet.Write(toClient);
+
+                SendTCPData(toClient, packet);
+            }
+        }
     }
 }
