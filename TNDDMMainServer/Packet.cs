@@ -8,13 +8,13 @@ namespace TNDDMMainServer
     /// <summary>Sent from server to client.</summary>
     public enum ServerPackets
     {
-        welcome = 1
+        TokenRequest = 3
     }
 
     /// <summary>Sent from client to server.</summary>
     public enum ClientPackets
     {
-        welcomeReceived = 1
+        Token = 3
     }
 
     public class Packet : IDisposable

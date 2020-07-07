@@ -6,18 +6,28 @@ namespace TNDDMMainServer
 {
     class ServerHandle
     {
-        public static void WelcomeReceived(int fromClient , Packet packet)
+        public static void TokenReceived(int fromClient, Packet packet)
         {
             int clientIdCheck = packet.ReadInt();
             string username = packet.ReadString();
+            string token = packet.ReadString();
 
             Console.WriteLine($"{Server.clients[fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {fromClient}.");
-            if(fromClient != clientIdCheck)
+            if (fromClient != clientIdCheck)
             {
                 Console.WriteLine($"Player \"{username}\" (ID: {fromClient}) has assumed the wrong client ID");
             }
 
-            // TODO: send player into game?
+            if (TokenManager.IsTokenValid(username, token))
+            {
+                Console.WriteLine("User : " + username + " connected with the correct token");
+            }
+            else
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                Console.WriteLine("User : " + username + " connected with the incorrect token");
+            }
         }
+
     }
 }

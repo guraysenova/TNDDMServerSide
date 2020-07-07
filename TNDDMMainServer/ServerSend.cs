@@ -26,9 +26,9 @@ namespace TNDDMMainServer
             }
         }
 
-        public static void Welcome(int toClient , string message)
+        public static void TokenRequest(int toClient , string message)
         {
-            using(Packet packet = new Packet((int)ServerPackets.welcome))
+            using(Packet packet = new Packet((int)ServerPackets.TokenRequest))
             {
                 packet.Write(message);
                 packet.Write(toClient);
