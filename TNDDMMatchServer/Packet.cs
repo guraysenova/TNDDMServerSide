@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TNDDMMainServer
+namespace TNDDMMatchServer
 {
 
     /// <summary>Sent from server to client.</summary>

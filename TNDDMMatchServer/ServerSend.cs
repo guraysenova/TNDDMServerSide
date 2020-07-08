@@ -4,7 +4,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
-namespace TNDDMMainServer
+namespace TNDDMMatchServer
 {
     class ServerSend
     {
