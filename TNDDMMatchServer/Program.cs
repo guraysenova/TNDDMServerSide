@@ -10,7 +10,7 @@ namespace TNDDMMatchServer
 
         static void Main(string[] args)
         {
-            Console.Title = "TNDDM Main Server";
+            Console.Title = "TNDDM Match Server";
 
             isRunning = true;
 
