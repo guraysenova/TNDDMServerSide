@@ -16,6 +16,8 @@ namespace TNDDMMainServer
         public delegate void PacketHandler(int fromClient, Packet packet);
         public static Dictionary<int, PacketHandler> packetHandlers;
 
+        public static List<Lobby> lobbies = new List<Lobby>();
+
         private static TcpListener tcpListener;
 
         public static void StartServer(int maxPlayers ,int port)
