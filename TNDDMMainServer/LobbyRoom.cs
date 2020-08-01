@@ -36,6 +36,27 @@ namespace TNDDMMainServer
         {
 
         }
+
+        public string UUID
+        {
+            get
+            {
+                return roomUUID;
+            }
+        }
+
+        public bool CheckPlayer(string playerUUID)
+        {
+            bool value = false;
+            foreach (var uuid in playerUUIDs)
+            {
+                if(String.Equals(uuid , playerUUID))
+                {
+                    value = true;
+                }
+            }
+            return value;
+        }
     }
 
     public enum GameType
