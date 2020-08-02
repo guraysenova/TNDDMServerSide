@@ -10,12 +10,15 @@ namespace TNDDMMainServer
         string roomUUID;
         List<string> playerUUIDs = new List<string>();
         GameType gameType = new GameType();
+        string roomName;
 
-        public LobbyRoom(string roomUUID , string playerUUID , GameType gameType)
+
+        public LobbyRoom(string roomUUID , string playerUUID , GameType gameType , string roomName)
         {
             this.roomUUID = roomUUID;
             playerUUIDs.Add(playerUUID);
             this.gameType = gameType;
+            this.roomName = roomName;
         }
 
         public bool AddPlayer(string player)
@@ -57,10 +60,56 @@ namespace TNDDMMainServer
             }
             return value;
         }
+
+        public bool CanStart()
+        {
+            return playerUUIDs.Count == 2;
+        }
+
+        public string GetPlayerUUIDs()
+        {
+            string val = "";
+
+            for (int i = 0; i < playerUUIDs.Count; i++)
+            {
+                if(i == 0)
+                {
+                    val += playerUUIDs[i];
+                }
+                else
+                {
+                    val += ("," + playerUUIDs[i]);
+                }
+            }
+
+            return val;
+        }
+        public int PlayerCount
+        {
+            get
+            {
+                return playerUUIDs.Count;
+            }
+        }
+        public string RoomName
+        {
+            get
+            {
+                return roomName;
+            }
+        }
+
+        public int GameTypeIndex
+        {
+            get
+            {
+                return (int)gameType;
+            }
+        }
     }
 
     public enum GameType
     {
-        Classic
+        Classic = 0
     }
 }

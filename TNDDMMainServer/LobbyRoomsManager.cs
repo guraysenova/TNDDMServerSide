@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace TNDDMMainServer
     {
         static List<LobbyRoom> rooms = new List<LobbyRoom>();
 
-        int startPort = 26951;
+        static int startPort = 26951;
 
         static List<PortData> ports = new List<PortData>();
 
@@ -20,7 +21,7 @@ namespace TNDDMMainServer
             }
         }
 
-        public void CreateRoom(string playerUUID)
+        public static void CreateRoom(string playerUUID , string roomName)
         {
             foreach (var room in rooms)
             {
@@ -35,10 +36,10 @@ namespace TNDDMMainServer
             }
             string roomUUID = Guid.NewGuid().ToString();
 
-            rooms.Add(new LobbyRoom(roomUUID, playerUUID , GameType.Classic));
+            rooms.Add(new LobbyRoom(roomUUID, playerUUID , GameType.Classic , roomName));
         }
 
-        public void CloseRoom(string playerUUID)
+        public static void CloseRoom(string playerUUID)
         {
             foreach (var room in rooms)
             {
@@ -49,7 +50,12 @@ namespace TNDDMMainServer
             }
         }
 
-        public void StartGame(string playerUUID)
+        public static void EnterRoom(string playerUUID , string roomUUID)
+        {
+
+        }
+
+        public static void StartGame(string playerUUID)
         {
             int port = GetEmptyPort();
             if (port < 0)
@@ -57,28 +63,22 @@ namespace TNDDMMainServer
                 return;
             }
 
-            string roomUUID = "";
-
-            bool canStart = false;
-
             foreach (var room in rooms)
             {
-                if (room.CheckPlayer(playerUUID))
+                if (room.CheckPlayer(playerUUID) && room.CanStart())
                 {
-                    roomUUID = room.UUID;
-                    canStart = true;
+                    AddRoomToDatabase(room , port);
+                    //TODO: START NEW MATCH SERVER UP.
+                    return;
                 }
-            }
-
-            if (canStart)
-            {
-                ports.Add(new PortData(roomUUID, port));
             }
         }
 
-        int GetEmptyPort()
+        static int GetEmptyPort()
         {
-            if(ports.Count == 10)
+            GetPorts();
+
+            if (ports.Count == 10)
             {
                 return -1;
             }
@@ -105,14 +105,52 @@ namespace TNDDMMainServer
             }
         }
 
-        public void GetPorts()
+        public static void GetPorts()
         {
+            ports = new List<PortData>();
 
+            MySqlConnection mySqlConnection = new MySqlConnection("datasource=localhost;port=3306;username=root;password=");
+
+            mySqlConnection.Open();
+
+            MySqlCommand command = new MySqlCommand($"SELECT isActive, UUID, IP, Port, PlayerUUIDs FROM match_server.match_servers", mySqlConnection);
+
+            using (MySqlDataReader mySqlDataReader = command.ExecuteReader())
+            {
+                while (mySqlDataReader.Read())
+                {
+                    ports.Add(new PortData(mySqlDataReader.GetString("UUID"), mySqlDataReader.GetInt32("Port")));
+                }
+            }
+
+            mySqlConnection.Close();
         }
 
-        public void AddRoomToDatabase(LobbyRoom room , int port)
+        public static void AddRoomToDatabase(LobbyRoom room , int port)
         {
+            MySqlConnection mySqlConnection = new MySqlConnection("datasource=localhost;port=3306;username=root;password=");
 
+            mySqlConnection.Open();
+
+            MySqlCommand command = new MySqlCommand($"INSERT INTO match_server.match_servers(isActive,UUID,IP,Port,PlayerUUIDs) VALUES('{0}','{room.UUID}','{""}','{port}','{room.GetPlayerUUIDs()}')", mySqlConnection);
+
+            try
+            {
+                if (command.ExecuteNonQuery() == 1)
+                {
+                    Console.WriteLine("Data Inserted");
+                }
+                else
+                {
+                    Console.WriteLine("Data Not Inserted");
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+
+            mySqlConnection.Close();
         }
     }
 

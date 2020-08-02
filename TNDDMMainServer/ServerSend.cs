@@ -49,5 +49,18 @@ namespace TNDDMMainServer
                 SendTCPData(toClient, packet);
             }
         }
+
+        public static void LobbyRoom(int toClient , LobbyRoom room)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.LobbyRoom))
+            {
+                packet.Write(room.UUID);
+                packet.Write(room.RoomName);
+                packet.Write(room.PlayerCount);
+                packet.Write(room.GameTypeIndex);
+
+                SendTCPData(toClient, packet);
+            }
+        }
     }
 }

@@ -29,5 +29,13 @@ namespace TNDDMMainServer
             }
         }
 
+        public static void LobbyRoomRequest(int fromClient)
+        {
+            foreach (var room in LobbyRoomsManager.Rooms)
+            {
+                ServerSend.LobbyRoom(fromClient, room);
+            }
+        }
+
     }
 }
