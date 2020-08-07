@@ -29,7 +29,7 @@ namespace TNDDMMainServer
             }
         }
 
-        public static void LobbyRoomRequest(int fromClient)
+        public static void LobbyRoomRequest(int fromClient , Packet packet)
         {
             foreach (var room in LobbyRoomsManager.Rooms)
             {
