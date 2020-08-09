@@ -26,11 +26,11 @@ namespace TNDDMMainServer
             }
         }
 
-        public static void TokenRequest(int toClient , string message)
+        public static void TokenRequest(int toClient , string uuid)
         {
             using(Packet packet = new Packet((int)ServerPackets.TokenRequest))
             {
-                packet.Write(message);
+                packet.Write(uuid);
                 packet.Write(toClient);
 
                 SendTCPData(toClient, packet);
