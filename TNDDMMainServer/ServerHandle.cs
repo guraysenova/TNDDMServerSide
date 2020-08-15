@@ -15,7 +15,7 @@ namespace TNDDMMainServer
 
             string tokenUUID = packet.ReadString();
             string token = packet.ReadString();
-
+            Server.clients[fromClient].ClientName = username;
             Console.WriteLine($"{Server.clients[fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {fromClient}.");
             if (fromClient != clientIdCheck)
             {
@@ -51,9 +51,25 @@ namespace TNDDMMainServer
                 if (roomName.Length > 1)
                 {
                     roomName = roomName.Remove(roomName.Length - 1);
-                    LobbyRoomsManager.CreateRoom(UUID, roomName);
+                    LobbyRoomsManager.CreateRoom(fromClient, roomName);
+                    LobbyRoom room = LobbyRoomsManager.GetRoom(Server.clients[fromClient].UUID);
+                    if(room != null)
+                    {
+                        ServerSend.RoomData(fromClient, room);
+                    }
                 }
             }
+        }
+
+        public static void LoginRoom(int fromClient , Packet packet)
+        {
+            string roomUUID = packet.ReadString();
+            LobbyRoomsManager.EnterRoom(fromClient, roomUUID);
+        }
+
+        public static void ToggleReady(int fromClient, Packet packet)
+        {
+            LobbyRoomsManager.ToggleReady(fromClient);
         }
     }
 }

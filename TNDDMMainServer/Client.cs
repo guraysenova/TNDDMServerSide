@@ -13,7 +13,32 @@ namespace TNDDMMainServer
 
         public int id;
         public TCP tcp;
-        public string UUID;
+        string clientUUID;
+        string clientName;
+
+        public string UUID
+        {
+            get
+            {
+                return clientUUID;
+            }
+            set
+            {
+                clientUUID = value;
+            }
+        }
+
+        public string ClientName
+        {
+            get
+            {
+                return clientName;
+            }
+            set
+            {
+                clientName = value;
+            }
+        }
         //public UDP udp;
 
         public Client(int _clientId)
@@ -51,9 +76,9 @@ namespace TNDDMMainServer
 
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
 
-                Server.clients[id].UUID = Guid.NewGuid().ToString();
+                Server.clients[id].clientUUID = Guid.NewGuid().ToString();
 
-                ServerSend.TokenRequest(id, Server.clients[id].UUID);
+                ServerSend.TokenRequest(id, Server.clients[id].clientUUID);
             }
 
             /// <summary>Sends data to the client via TCP.</summary>

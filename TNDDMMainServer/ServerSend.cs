@@ -73,5 +73,20 @@ namespace TNDDMMainServer
                 SendTCPData(toClient, packet);
             }
         }
+
+        public static void RoomData(int toClient , LobbyRoom room)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.RoomData))
+            {
+                packet.Write(room.RoomName);
+                packet.Write(room.PlayerCount);
+                for (int i = 0; i < room.PlayerCount; i++)
+                {
+                    packet.Write(room.Players[i].playerName);
+                    packet.Write(room.Players[i].isReady);
+                }
+                SendTCPData(toClient, packet);
+            }
+        }
     }
 }

@@ -8,30 +8,35 @@ namespace TNDDMMainServer
     class LobbyRoom
     {
         string roomUUID;
-        List<string> playerUUIDs = new List<string>();
+        List<PlayerData> players = new List<PlayerData>();
         GameType gameType = new GameType();
         string roomName;
 
 
-        public LobbyRoom(string roomUUID , string playerUUID , GameType gameType , string roomName)
+        public LobbyRoom(string roomUUID , int playerIndex , GameType gameType , string roomName)
         {
             this.roomUUID = roomUUID;
-            playerUUIDs.Add(playerUUID);
+
+            players.Add(new PlayerData(false ,Server.clients[playerIndex].UUID , Server.clients[playerIndex].ClientName , playerIndex));
+
             this.gameType = gameType;
             this.roomName = roomName;
         }
 
-        public bool AddPlayer(string player)
+        public void AddPlayer(int playerIndex)
         {
-            if(playerUUIDs.Count < 2)
+            if(players.Count < 2)
             {
-                playerUUIDs.Add(player);
-                // TODO: Do something to alert existing players
-                return true;
+                players.Add(new PlayerData(false, Server.clients[playerIndex].UUID, Server.clients[playerIndex].ClientName, playerIndex));
+                UpdatePlayers();
             }
-            else
+        }
+
+        void UpdatePlayers()
+        {
+            foreach (var player in players)
             {
-                return false;
+                ServerSend.RoomData(player.index, this);
             }
         }
 
@@ -51,9 +56,9 @@ namespace TNDDMMainServer
         public bool CheckPlayer(string playerUUID)
         {
             bool value = false;
-            foreach (var uuid in playerUUIDs)
+            foreach (var player in players)
             {
-                if(String.Equals(uuid , playerUUID))
+                if(String.Equals(player.playerUUID , playerUUID))
                 {
                     value = true;
                 }
@@ -61,24 +66,36 @@ namespace TNDDMMainServer
             return value;
         }
 
+        public void ToggleReady(int clientIndex)
+        {
+            for (int i = 0; i < players.Count; i++)
+            {
+                if(players[i].index == clientIndex)
+                {
+                    players[i].isReady = !players[i].isReady;
+                }
+            }
+            UpdatePlayers();
+        }
+
         public bool CanStart()
         {
-            return playerUUIDs.Count == 2;
+            return players.Count == 2;
         }
 
         public string GetPlayerUUIDs()
         {
             string val = "";
 
-            for (int i = 0; i < playerUUIDs.Count; i++)
+            for (int i = 0; i < players.Count; i++)
             {
                 if(i == 0)
                 {
-                    val += playerUUIDs[i];
+                    val += players[i].playerUUID;
                 }
                 else
                 {
-                    val += ("," + playerUUIDs[i]);
+                    val += ("," + players[i].playerUUID);
                 }
             }
 
@@ -88,7 +105,7 @@ namespace TNDDMMainServer
         {
             get
             {
-                return playerUUIDs.Count;
+                return players.Count;
             }
         }
         public string RoomName
@@ -106,10 +123,34 @@ namespace TNDDMMainServer
                 return (int)gameType;
             }
         }
+        public List<PlayerData> Players
+        {
+            get
+            {
+                return players;
+            }
+        } 
     }
 
     public enum GameType
     {
         Classic = 0
+    }
+}
+
+[System.Serializable]
+class PlayerData
+{
+    public bool isReady;
+    public string playerUUID;
+    public string playerName;
+    public int index;
+
+    public PlayerData(bool ready , string uuid , string playerNameVal , int indexVal)
+    {
+        isReady = ready;
+        playerUUID = uuid;
+        playerName = playerNameVal;
+        index = indexVal;
     }
 }

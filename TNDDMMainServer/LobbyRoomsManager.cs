@@ -21,11 +21,11 @@ namespace TNDDMMainServer
             }
         }
 
-        public static void CreateRoom(string playerUUID , string roomName)
+        public static void CreateRoom(int clientIndex , string roomName)
         {
             foreach (var room in rooms)
             {
-                if (room.CheckPlayer(playerUUID))
+                if (room.CheckPlayer(Server.clients[clientIndex].UUID))
                 {
                     return;
                 }
@@ -36,7 +36,7 @@ namespace TNDDMMainServer
             }
             string roomUUID = Guid.NewGuid().ToString();
 
-            rooms.Add(new LobbyRoom(roomUUID, playerUUID , GameType.Classic , roomName));
+            rooms.Add(new LobbyRoom(roomUUID, clientIndex , GameType.Classic , roomName));
         }
 
         public static void CloseRoom(string playerUUID)
@@ -50,9 +50,26 @@ namespace TNDDMMainServer
             }
         }
 
-        public static void EnterRoom(string playerUUID , string roomUUID)
+        public static void EnterRoom(int playerIndex , string roomUUID)
         {
+            foreach (var room in rooms)
+            {
+                if(string.Equals(room.UUID , roomUUID) && room.PlayerCount < 2)
+                {
+                    room.AddPlayer(playerIndex);
+                }
+            }
+        }
 
+        public static void ToggleReady(int playerIndex)
+        {
+            foreach (var room in rooms)
+            {
+                if (string.Equals(room.UUID, GetRoom(Server.clients[playerIndex].UUID).UUID))
+                {
+                    room.ToggleReady(playerIndex);
+                }
+            }
         }
 
         public static void ExitRoom(string playerUUID , string roomUUID)
@@ -82,6 +99,18 @@ namespace TNDDMMainServer
                     return;
                 }
             }
+        }
+
+        public static LobbyRoom GetRoom(string playerUUID)
+        {
+            foreach (var room in rooms)
+            {
+                if (room.CheckPlayer(playerUUID))
+                {
+                    return room;
+                }
+            }
+            return null;
         }
 
         static int GetEmptyPort()
@@ -172,7 +201,7 @@ namespace TNDDMMainServer
         public PortData(string uuid , int port)
         {
             roomUUID = uuid;
-            port = portNumber;
+            portNumber = port;
         }
 
         public int Port
