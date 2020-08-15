@@ -37,14 +37,14 @@ namespace TNDDMLogin
             }
         }
 
-        public static void Token(int toClient , string token , string ip , int port)
+        public static void Token(int toClient , string token , string ip , int port , string uuid)
         {
             using (Packet packet = new Packet((int)ServerPackets.Token))
             {
                 packet.Write(token);
                 packet.Write(ip);
                 packet.Write(port);
-                packet.Write(toClient);
+                packet.Write(uuid);
 
                 SendTCPData(toClient, packet);
             }

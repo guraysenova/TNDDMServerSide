@@ -10,6 +10,7 @@ namespace TNDDMLogin
         {
             int clientIdCheck = packet.ReadInt();
             string username = packet.ReadString();
+            username = username.Remove(username.Length - 1);
 
             Console.WriteLine($"{Server.clients[fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {fromClient}.");
             if(fromClient != clientIdCheck)
@@ -19,9 +20,11 @@ namespace TNDDMLogin
 
             string token = TokenGenerator.GetNewToken();
 
-            TokenManager.AddToken(username, token);
+            string userUUID = Guid.NewGuid().ToString();
 
-            ServerSend.Token(fromClient , token, "127.0.0.1", 26951);
+            TokenManager.AddToken(userUUID, token);
+
+            ServerSend.Token(fromClient , token, "127.0.0.1", 26951 , userUUID);
         }
     }
 }

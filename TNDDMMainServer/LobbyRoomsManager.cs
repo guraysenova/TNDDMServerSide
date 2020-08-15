@@ -55,6 +55,16 @@ namespace TNDDMMainServer
 
         }
 
+        public static void ExitRoom(string playerUUID , string roomUUID)
+        {
+
+        }
+
+        public static void ToggleReady(string playerUUID)
+        {
+
+        }
+
         public static void StartGame(string playerUUID)
         {
             int port = GetEmptyPort();

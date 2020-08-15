@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace TNDDMMainServer
@@ -10,6 +11,9 @@ namespace TNDDMMainServer
         {
             int clientIdCheck = packet.ReadInt();
             string username = packet.ReadString();
+            username = username.Remove(username.Length - 1);
+
+            string tokenUUID = packet.ReadString();
             string token = packet.ReadString();
 
             Console.WriteLine($"{Server.clients[fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {fromClient}.");
@@ -18,7 +22,7 @@ namespace TNDDMMainServer
                 Console.WriteLine($"Player \"{username}\" (ID: {fromClient}) has assumed the wrong client ID");
             }
 
-            if (TokenManager.IsTokenValid(username, token))
+            if (TokenManager.IsTokenValid(tokenUUID, token))
             {
                 Console.WriteLine("User : " + username + " connected with the correct token");
                 ServerSend.ConnectedToLobby(fromClient);
@@ -38,12 +42,18 @@ namespace TNDDMMainServer
             }
         }
 
-        public static void CreateRoom(int fromClient , Packet packet)
+        public static void CreateRoom(int fromClient, Packet packet)
         {
             string UUID = packet.ReadString();
-            string roomName = packet.ReadString();
-            LobbyRoomsManager.CreateRoom(UUID,roomName);
+            if (string.Equals(Server.clients[fromClient].UUID , UUID))
+            {
+                string roomName = packet.ReadString();
+                if (roomName.Length > 1)
+                {
+                    roomName = roomName.Remove(roomName.Length - 1);
+                    LobbyRoomsManager.CreateRoom(UUID, roomName);
+                }
+            }
         }
-
     }
 }
