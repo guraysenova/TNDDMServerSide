@@ -21,6 +21,7 @@ namespace TNDDMMainServer
             if (TokenManager.IsTokenValid(username, token))
             {
                 Console.WriteLine("User : " + username + " connected with the correct token");
+                ServerSend.ConnectedToLobby(fromClient);
             }
             else
             {
@@ -35,6 +36,13 @@ namespace TNDDMMainServer
             {
                 ServerSend.LobbyRoom(fromClient, room);
             }
+        }
+
+        public static void CreateRoom(int fromClient , Packet packet)
+        {
+            string UUID = packet.ReadString();
+            string roomName = packet.ReadString();
+            LobbyRoomsManager.CreateRoom(UUID,roomName);
         }
 
     }

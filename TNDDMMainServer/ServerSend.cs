@@ -37,6 +37,17 @@ namespace TNDDMMainServer
             }
         }
 
+
+        public static void ConnectedToLobby(int toClient)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.ConnectedToLobby))
+            {
+                packet.Write(toClient);
+
+                SendTCPData(toClient, packet);
+            }
+        }
+
         public static void Token(int toClient, string token, string ip, int port)
         {
             using (Packet packet = new Packet((int)ServerPackets.Token))

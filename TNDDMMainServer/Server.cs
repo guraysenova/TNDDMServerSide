@@ -62,7 +62,8 @@ namespace TNDDMMainServer
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
                 {(int)ClientPackets.Token , ServerHandle.TokenReceived },
-                {(int)ClientPackets.LobbyRoomRequest , ServerHandle.LobbyRoomRequest }
+                {(int)ClientPackets.LobbyRoomRequest , ServerHandle.LobbyRoomRequest },
+                {(int)ClientPackets.CreateRoom , ServerHandle.CreateRoom }
             };
         }
     }

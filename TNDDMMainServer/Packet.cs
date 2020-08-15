@@ -10,14 +10,21 @@ namespace TNDDMMainServer
     {
         Token = 2,
         TokenRequest = 3,
-        LobbyRoom = 4
+        LobbyRoom = 4,
+        ConnectedToLobby = 5,
+        RoomData = 6
     }
 
     /// <summary>Sent from client to server.</summary>
     public enum ClientPackets
     {
         Token = 3,
-        LobbyRoomRequest = 4
+        LobbyRoomRequest = 4,
+        CreateRoom = 5,
+        LoginRoom = 6,
+        ExitRoom = 7,
+        ToggleReady = 8,
+        StartRoom = 9
     }
 
     public class Packet : IDisposable

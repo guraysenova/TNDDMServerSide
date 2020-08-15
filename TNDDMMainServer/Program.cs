@@ -19,7 +19,7 @@ namespace TNDDMMainServer
 
             Server.StartServer(100, 26951);
 
-            //LobbyRoomsManager.CreateRoom("TESTUUID", "Helloo :)");
+            LobbyRoomsManager.CreateRoom("TESTUUID", "Helloo :)");
         }
 
         private static void MainThread()
