@@ -72,9 +72,15 @@ namespace TNDDMMainServer
             }
         }
 
-        public static void ExitRoom(string playerUUID , string roomUUID)
+        public static void ExitRoom(int playerIndex)
         {
-
+            foreach (var room in rooms)
+            {
+                if (string.Equals(room.UUID, GetRoom(Server.clients[playerIndex].UUID).UUID))
+                {
+                    room.RemovePlayer(playerIndex);
+                }
+            }
         }
 
         public static void ToggleReady(string playerUUID)

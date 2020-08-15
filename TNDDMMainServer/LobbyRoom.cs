@@ -40,9 +40,17 @@ namespace TNDDMMainServer
             }
         }
 
-        public void RemovePlayer(string player)
+        public void RemovePlayer(int playerIndex)
         {
-
+            foreach (var player in players)
+            {
+                if(player.index == playerIndex)
+                {
+                    players.Remove(player);
+                    UpdatePlayers();
+                    break;
+                }
+            }
         }
 
         public string UUID

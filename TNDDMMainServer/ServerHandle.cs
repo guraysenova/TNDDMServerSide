@@ -71,5 +71,10 @@ namespace TNDDMMainServer
         {
             LobbyRoomsManager.ToggleReady(fromClient);
         }
+
+        public static void ExitRoom(int fromClient , Packet packet)
+        {
+            LobbyRoomsManager.ExitRoom(fromClient);
+        }
     }
 }

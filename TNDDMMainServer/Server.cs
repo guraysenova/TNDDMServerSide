@@ -65,7 +65,8 @@ namespace TNDDMMainServer
                 {(int)ClientPackets.LobbyRoomRequest , ServerHandle.LobbyRoomRequest },
                 {(int)ClientPackets.CreateRoom , ServerHandle.CreateRoom },
                 {(int)ClientPackets.LoginRoom , ServerHandle.LoginRoom },
-                {(int)ClientPackets.ToggleReady , ServerHandle.ToggleReady }
+                {(int)ClientPackets.ToggleReady , ServerHandle.ToggleReady },
+                {(int)ClientPackets.ExitRoom , ServerHandle.ExitRoom }
             };
         }
     }
