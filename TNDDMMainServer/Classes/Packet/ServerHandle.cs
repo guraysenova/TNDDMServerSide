@@ -19,7 +19,8 @@ namespace TNDDMMainServer
             Console.WriteLine($"{Server.clients[fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {fromClient}.");
             if (fromClient != clientIdCheck)
             {
-                Console.WriteLine($"Player \"{username}\" (ID: {fromClient}) has assumed the wrong client ID");
+                Console.WriteLine($"Player \"{username}\" (ID: {fromClient}) has assumed the wrong client ID : {clientIdCheck}");
+                Server.clients[fromClient].tcp.Disconnect();
             }
 
             if (TokenManager.IsTokenValid(tokenUUID, token))

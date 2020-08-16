@@ -1,22 +1,26 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace TNDDMLogin
+namespace TNDDMMainServer
 {
-    class LoginServer
+    class MainServer
     {
+        static string version = "v0.1a";
         private static bool isRunning = false;
 
         static void Main(string[] args)
         {
-            Console.Title = "TNDDM Login Server";
+            Console.Title = "TNDDM Main Server" + " " + version;
 
             isRunning = true;
 
             Thread mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
 
-            Server.StartServer(100, 26950);
+            Server.StartServer(100, 26951);
+
+            //LobbyRoomsManager.CreateRoom("TESTUUID", "Helloo :)");
         }
 
         private static void MainThread()

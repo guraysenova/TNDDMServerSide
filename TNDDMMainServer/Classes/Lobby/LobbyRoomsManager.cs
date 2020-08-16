@@ -39,17 +39,6 @@ namespace TNDDMMainServer
             rooms.Add(new LobbyRoom(roomUUID, clientIndex , GameType.Classic , roomName));
         }
 
-        public static void CloseRoom(string playerUUID)
-        {
-            foreach (var room in rooms)
-            {
-                if (room.CheckPlayer(playerUUID))
-                {
-                    // TODO: CLOSE HERE
-                }
-            }
-        }
-
         public static void EnterRoom(int playerIndex , string roomUUID)
         {
             foreach (var room in rooms)
@@ -74,18 +63,17 @@ namespace TNDDMMainServer
 
         public static void ExitRoom(int playerIndex)
         {
-            foreach (var room in rooms)
+            if(GetRoom(Server.clients[playerIndex].UUID) != null)
             {
-                if (string.Equals(room.UUID, GetRoom(Server.clients[playerIndex].UUID).UUID))
+                foreach (var room in rooms)
                 {
-                    room.RemovePlayer(playerIndex);
+                    if (string.Equals(room.UUID, GetRoom(Server.clients[playerIndex].UUID).UUID))
+                    {
+                        room.RemovePlayer(playerIndex);
+                        break;
+                    }
                 }
             }
-        }
-
-        public static void ToggleReady(string playerUUID)
-        {
-
         }
 
         public static void StartGame(string playerUUID)
@@ -147,6 +135,14 @@ namespace TNDDMMainServer
                     }
                 }
                 return -1;
+            }
+        }
+
+        public static void CloseRoom(LobbyRoom room)
+        {
+            if (rooms.Contains(room))
+            {
+                rooms.Remove(room);
             }
         }
 

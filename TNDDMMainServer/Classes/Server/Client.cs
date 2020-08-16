@@ -192,7 +192,8 @@ namespace TNDDMMainServer
         private void Disconnect()
         {
             Console.WriteLine($"{tcp.socket.Client.RemoteEndPoint} has disconnected.");
-
+            LobbyRoomsManager.ExitRoom(id);
+            clientUUID = "";
             tcp.Disconnect();
 
         }

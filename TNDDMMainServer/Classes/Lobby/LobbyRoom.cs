@@ -47,7 +47,14 @@ namespace TNDDMMainServer
                 if(player.index == playerIndex)
                 {
                     players.Remove(player);
-                    UpdatePlayers();
+                    if(players.Count > 0) 
+                    {
+                        UpdatePlayers();
+                    }
+                    else
+                    {
+                        LobbyRoomsManager.CloseRoom(this);
+                    }
                     break;
                 }
             }
@@ -88,7 +95,7 @@ namespace TNDDMMainServer
 
         public bool CanStart()
         {
-            return players.Count == 2;
+            return (players.Count == 2 && players[0].isReady && players[1].isReady);
         }
 
         public string GetPlayerUUIDs()

@@ -2,24 +2,26 @@
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace TNDDMMainServer
+namespace TNDDMMatchServer
 {
-    class MainServer
+    class MatchServer
     {
+        static string version = "v0.1a";
+
         private static bool isRunning = false;
 
         static void Main(string[] args)
         {
-            Console.Title = "TNDDM Main Server";
+            Console.Title = "TNDDM Match Server" + " " + version;
 
             isRunning = true;
 
             Thread mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
 
-            Server.StartServer(100, 26951);
+            // TODO: GET PORT FROM DATABASE!!!!!!!!
 
-            //LobbyRoomsManager.CreateRoom("TESTUUID", "Helloo :)");
+            //Server.StartServer(100, 26951);
         }
 
         private static void MainThread()
