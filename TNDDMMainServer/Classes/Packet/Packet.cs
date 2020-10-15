@@ -12,7 +12,8 @@ namespace TNDDMMainServer
         TokenRequest = 3,
         LobbyRoom = 4,
         ConnectedToLobby = 5,
-        RoomData = 6
+        RoomData = 6,
+        RoomStarted = 7
     }
 
     /// <summary>Sent from client to server.</summary>
