@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace TNDDMMatchServer.Classes.Game.Board.UnfoldingDice
 {
-    class DiceUnfoldData
+    [System.Serializable]
+    public class DiceUnfoldData
     {
+        public List<TwoDCoordinate> myCoordinates;
     }
 }

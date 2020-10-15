@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TNDDMMatchServer.Classes.Game.RollingDice
+﻿namespace TNDDMMatchServer.Classes.Game.RollingDice
 {
-    class CrestType
+    public enum CrestType
     {
+        Attack,
+        Summoning,
+        Spell,
+        Defense,
+        Trap,
+        Movement
     }
 }

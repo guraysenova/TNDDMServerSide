@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TNDDMMatchServer.Classes.Game.Board
+﻿namespace TNDDMMatchServer.Classes.Game.Board
 {
-    class Direction
+    public enum Direction
     {
+        Up = 0,
+        Down = 1,
+        Left = 2,
+        Right = 3,
+        Portal = 4
     }
 }

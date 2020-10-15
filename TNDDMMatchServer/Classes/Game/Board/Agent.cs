@@ -6,5 +6,6 @@ namespace TNDDMMatchServer.Classes.Game.Board
 {
     class Agent
     {
+        public PlayerEnum Player { get; set; }
     }
 }
