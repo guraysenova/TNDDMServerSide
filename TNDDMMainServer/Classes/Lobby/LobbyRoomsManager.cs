@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 
@@ -76,7 +77,7 @@ namespace TNDDMMainServer
             }
         }
 
-        public static void StartGame(string playerUUID)
+        public static void StartGame(int playerIndex)
         {
             int port = GetEmptyPort();
             if (port < 0)
@@ -86,10 +87,18 @@ namespace TNDDMMainServer
 
             foreach (var room in rooms)
             {
-                if (room.CheckPlayer(playerUUID) && room.CanStart())
+                if (room.CheckPlayer(Server.clients[playerIndex].UUID) && room.CanStart())
                 {
                     AddRoomToDatabase(room , port);
+                    room.Started = true;
                     //TODO: START NEW MATCH SERVER UP.
+                    Process matchServer = new Process();
+                    matchServer.StartInfo.UseShellExecute = true;
+                    matchServer.StartInfo.FileName = "C:\\Users\\Guray\\Documents\\Projects\\Guray\\TNDDMServerSide\\TNDDMMatchServer\\bin\\Debug\\netcoreapp3.1\\TNDDMMatchServer.exe";
+                    matchServer.StartInfo.CreateNoWindow = false;
+                    matchServer.Start();
+                    
+                    //Process.Start("C:\\Users\\Guray\\Documents\\Projects\\Guray\\TNDDMServerSide\\TNDDMMatchServer\\bin\\Debug\\netcoreapp3.1\\TNDDMMatchServer.exe");
                     return;
                 }
             }

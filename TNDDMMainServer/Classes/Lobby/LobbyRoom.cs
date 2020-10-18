@@ -11,6 +11,7 @@ namespace TNDDMMainServer
         List<PlayerData> players = new List<PlayerData>();
         GameType gameType = new GameType();
         string roomName;
+        bool started = false;
 
 
         public LobbyRoom(string roomUUID , int playerIndex , GameType gameType , string roomName)
@@ -95,7 +96,15 @@ namespace TNDDMMainServer
 
         public bool CanStart()
         {
-            return (players.Count == 2 && players[0].isReady && players[1].isReady);
+            return (players.Count == 2 && players[0].isReady && players[1].isReady && !started);
+        }
+
+        public bool Started
+        {
+            set
+            {
+                started = value;
+            }
         }
 
         public string GetPlayerUUIDs()

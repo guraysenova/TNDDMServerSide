@@ -80,7 +80,7 @@ namespace TNDDMMainServer
 
         public static void StartRoom(int fromClient , Packet packet)
         {
-
+            LobbyRoomsManager.StartGame(fromClient);
         }
     }
 }
