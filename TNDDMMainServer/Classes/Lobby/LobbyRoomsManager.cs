@@ -89,13 +89,16 @@ namespace TNDDMMainServer
             {
                 if (room.CheckPlayer(Server.clients[playerIndex].UUID) && room.CanStart())
                 {
-                    AddRoomToDatabase(room , port);
+                    //AddRoomToDatabase(room , port);
                     room.Started = true;
                     //TODO: START NEW MATCH SERVER UP.
                     Process matchServer = new Process();
                     matchServer.StartInfo.UseShellExecute = true;
                     matchServer.StartInfo.FileName = "C:\\Users\\Guray\\Documents\\Projects\\Guray\\TNDDMServerSide\\TNDDMMatchServer\\bin\\Debug\\netcoreapp3.1\\TNDDMMatchServer.exe";
                     matchServer.StartInfo.CreateNoWindow = false;
+                    string args = "";
+                    args += port.ToString() + "," + room.UUID + "," + room.GetPlayerUUIDs();
+                    matchServer.StartInfo.Arguments= args;
                     matchServer.Start();
                     
                     //Process.Start("C:\\Users\\Guray\\Documents\\Projects\\Guray\\TNDDMServerSide\\TNDDMMatchServer\\bin\\Debug\\netcoreapp3.1\\TNDDMMatchServer.exe");
