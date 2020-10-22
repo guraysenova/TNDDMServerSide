@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TNDDMMainServer.Classes.Token;
 
 namespace TNDDMMainServer
 {
@@ -169,6 +170,7 @@ class PlayerData
     public string playerUUID;
     public string playerName;
     public int index;
+    public string token;
 
     public PlayerData(bool ready , string uuid , string playerNameVal , int indexVal)
     {
@@ -176,5 +178,6 @@ class PlayerData
         playerUUID = uuid;
         playerName = playerNameVal;
         index = indexVal;
+        token = "";
     }
 }

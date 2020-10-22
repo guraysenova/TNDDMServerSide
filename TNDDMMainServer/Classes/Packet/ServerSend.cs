@@ -88,5 +88,27 @@ namespace TNDDMMainServer
                 SendTCPData(toClient, packet);
             }
         }
+
+        public static void RoomStarting(int toClient)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.RoomStarting))
+            {
+                SendTCPData(toClient, packet);
+            }
+        }
+
+        public static void RoomStarted(int toClient , LobbyRoom room , string ip , int port , string token , string clientUUID)
+        {
+            using (Packet packet = new Packet((int)ServerPackets.RoomStarted))
+            {
+                packet.Write(room.UUID);
+                packet.Write(ip);
+                packet.Write(port);
+                packet.Write(token);
+                packet.Write(clientUUID);
+
+                SendTCPData(toClient, packet);
+            }
+        }
     }
 }

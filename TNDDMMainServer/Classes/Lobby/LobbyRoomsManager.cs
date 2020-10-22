@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Text;
+using TNDDMMainServer.Classes.Token;
 
 namespace TNDDMMainServer
 {
@@ -91,17 +91,28 @@ namespace TNDDMMainServer
                 {
                     //AddRoomToDatabase(room , port);
                     room.Started = true;
-                    //TODO: START NEW MATCH SERVER UP.
+
+                    foreach (PlayerData player in room.Players)
+                    {
+                        string token = TokenGenerator.GetNewToken();
+                        player.token = token;
+                        ServerSend.RoomStarting(player.index);
+                    }
+
                     Process matchServer = new Process();
                     matchServer.StartInfo.UseShellExecute = true;
                     matchServer.StartInfo.FileName = "C:\\Users\\Guray\\Documents\\Projects\\Guray\\TNDDMServerSide\\TNDDMMatchServer\\bin\\Debug\\netcoreapp3.1\\TNDDMMatchServer.exe";
                     matchServer.StartInfo.CreateNoWindow = false;
-                    string args = "";
-                    args += port.ToString() + "," + room.UUID + "," + room.GetPlayerUUIDs();
-                    matchServer.StartInfo.Arguments= args;
+                    matchServer.StartInfo.RedirectStandardOutput = true;
+                    string args = port.ToString() + "," + room.UUID + "," + room.GetPlayerUUIDs() + "," + room.Players[0].token + "," + room.Players[1].token;
+                    matchServer.StartInfo.Arguments = args;
                     matchServer.Start();
-                    
-                    //Process.Start("C:\\Users\\Guray\\Documents\\Projects\\Guray\\TNDDMServerSide\\TNDDMMatchServer\\bin\\Debug\\netcoreapp3.1\\TNDDMMatchServer.exe");
+
+                    foreach (PlayerData player in room.Players)
+                    {
+                        ServerSend.RoomStarted(player.index , room, "127.0.0.1" , port , player.token, player.playerUUID);
+                    }
+
                     return;
                 }
             }

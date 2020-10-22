@@ -18,7 +18,7 @@ namespace TNDDMMatchServer
 
             Thread mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
-
+            Console.WriteLine("test");
             // TODO: GET PORT FROM DATABASE!!!!!!!!
 
             //Server.StartServer(100, 26951);

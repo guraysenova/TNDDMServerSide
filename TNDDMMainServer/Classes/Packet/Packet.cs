@@ -13,7 +13,8 @@ namespace TNDDMMainServer
         LobbyRoom = 4,
         ConnectedToLobby = 5,
         RoomData = 6,
-        RoomStarted = 7
+        RoomStarting = 7,
+        RoomStarted = 8
     }
 
     /// <summary>Sent from client to server.</summary>
