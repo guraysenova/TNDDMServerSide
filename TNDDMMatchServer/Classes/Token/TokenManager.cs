@@ -64,42 +64,11 @@ namespace TNDDMMatchServer
         }
 
 
-        public static bool IsTokenValid(string username, string token)
+        public static bool IsTokenValid(string roomUUID , string userUUID, string token)
         {
-            RefreshDataBase();
-
             bool isValid = false;
 
-            MySqlConnection mySqlConnection = new MySqlConnection("datasource=localhost;port=3306;username=root;password=");
-
-            mySqlConnection.Open();
-
-            MySqlCommand command = new MySqlCommand($"SELECT * FROM token.tokens WHERE token='{token}'", mySqlConnection);
-
-            MySqlDataReader mySqlDataReader;
-
-            try
-            {
-                mySqlDataReader = command.ExecuteReader();
-                if (mySqlDataReader.Read() &&
-                    String.Equals(mySqlDataReader.GetString("token"), token) &&
-                    String.Equals(mySqlDataReader.GetString("username"), username) &&
-                    (DateTime.Now - mySqlDataReader.GetDateTime("time")).TotalSeconds < 30.0)
-                {
-                    isValid = true;
-                    RemoveToken(token);
-                }
-                else
-                {
-                    isValid = false;
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-            }
-
-            mySqlConnection.Close();
+            // TODO: GET BOTH PLAYERS CHECK IF ONE MATCHES
 
             return isValid;
         }

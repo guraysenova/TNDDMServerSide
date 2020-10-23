@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -20,7 +21,10 @@ namespace TNDDMMatchServer
             mainThread.Start();
             Console.WriteLine("test");
             // TODO: GET PORT FROM DATABASE!!!!!!!!
-
+            foreach (var arg in args.ToList())
+            {
+                Console.WriteLine(arg);
+            }
             //Server.StartServer(100, 26951);
         }
 

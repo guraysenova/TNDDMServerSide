@@ -13,6 +13,7 @@ namespace TNDDMMainServer
 
         public int id;
         public TCP tcp;
+        public bool isTokenChecked = false;
         string clientUUID;
         string clientName;
 

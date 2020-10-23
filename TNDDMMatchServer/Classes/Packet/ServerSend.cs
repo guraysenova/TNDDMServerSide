@@ -26,9 +26,9 @@ namespace TNDDMMatchServer
             }
         }
 
-        public static void TokenRequest(int toClient , string message)
+        public static void MatchTokenRequest(int toClient , string message)
         {
-            using(Packet packet = new Packet((int)ServerPackets.TokenRequest))
+            using(Packet packet = new Packet((int)ServerPackets.MatchTokenRequest))
             {
                 packet.Write(message);
                 packet.Write(toClient);
@@ -37,15 +37,11 @@ namespace TNDDMMatchServer
             }
         }
 
-        public static void Token(int toClient, string token, string ip, int port)
+        public static void MatchStarted(int toClient , int clientOrder)
         {
-            using (Packet packet = new Packet((int)ServerPackets.Token))
+            using (Packet packet = new Packet((int)ServerPackets.MatchStarted))
             {
-                packet.Write(token);
-                packet.Write(ip);
-                packet.Write(port);
-                packet.Write(toClient);
-
+                packet.Write(clientOrder);
                 SendTCPData(toClient, packet);
             }
         }

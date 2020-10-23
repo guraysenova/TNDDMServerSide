@@ -8,14 +8,14 @@ namespace TNDDMMatchServer
     /// <summary>Sent from server to client.</summary>
     public enum ServerPackets
     {
-        Token = 2,
-        TokenRequest = 3
+        MatchTokenRequest = 9,
+        MatchStarted = 10
     }
 
     /// <summary>Sent from client to server.</summary>
     public enum ClientPackets
     {
-        Token = 3
+        MatchToken = 10
     }
 
     public class Packet : IDisposable

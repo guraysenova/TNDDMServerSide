@@ -103,14 +103,29 @@ namespace TNDDMMainServer
                     matchServer.StartInfo.UseShellExecute = true;
                     matchServer.StartInfo.FileName = "C:\\Users\\Guray\\Documents\\Projects\\Guray\\TNDDMServerSide\\TNDDMMatchServer\\bin\\Debug\\netcoreapp3.1\\TNDDMMatchServer.exe";
                     matchServer.StartInfo.CreateNoWindow = false;
-                    matchServer.StartInfo.RedirectStandardOutput = true;
-                    string args = port.ToString() + "," + room.UUID + "," + room.GetPlayerUUIDs() + "," + room.Players[0].token + "," + room.Players[1].token;
-                    matchServer.StartInfo.Arguments = args;
+                    //matchServer.StartInfo.RedirectStandardOutput = true;
+
+                    List<string> args = new List<string>() { 
+                        port.ToString() , 
+                        room.UUID , 
+                        room.Players[0].playerUUID ,
+                        room.Players[1].playerUUID ,
+                        room.Players[0].token ,
+                        room.Players[1].token ,
+                        room.Players[0].playerName ,
+                        room.Players[1].playerName
+                    };
+
+                    foreach (string arg in args)
+                    {
+                        matchServer.StartInfo.ArgumentList.Add(arg);
+                    }
+                    
                     matchServer.Start();
 
                     foreach (PlayerData player in room.Players)
                     {
-                        ServerSend.RoomStarted(player.index , room, "127.0.0.1" , port , player.token, player.playerUUID);
+                        ServerSend.RoomStarted(player.index , room, "127.0.0.1" , port , player.token);
                     }
 
                     return;

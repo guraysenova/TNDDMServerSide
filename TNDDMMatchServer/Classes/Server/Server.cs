@@ -61,7 +61,7 @@ namespace TNDDMMatchServer
 
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
-                {(int)ClientPackets.Token , ServerHandle.TokenReceived }
+                {(int)ClientPackets.MatchToken , ServerHandle.MatchToken }
             };
         }
     }

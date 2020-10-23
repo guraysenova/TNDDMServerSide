@@ -13,7 +13,9 @@ namespace TNDDMMatchServer
 
         public int id;
         public TCP tcp;
-        //public UDP udp;
+        public bool isTokenChecked = false;
+        public string clientUUID;
+        public string clientName;
 
         public Client(int _clientId)
         {
@@ -50,7 +52,7 @@ namespace TNDDMMatchServer
 
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
 
-                ServerSend.TokenRequest(id, "Match Server : Give me your token :)");
+                ServerSend.MatchTokenRequest(id, "Match Server : Give me your token :)");
             }
 
             /// <summary>Sends data to the client via TCP.</summary>

@@ -26,6 +26,7 @@ namespace TNDDMMainServer
             if (TokenManager.IsTokenValid(tokenUUID, token))
             {
                 Console.WriteLine("User : " + username + " connected with the correct token");
+                Server.clients[fromClient].isTokenChecked = true;
                 ServerSend.ConnectedToLobby(fromClient);
             }
             else
@@ -37,6 +38,11 @@ namespace TNDDMMainServer
 
         public static void LobbyRoomRequest(int fromClient , Packet packet)
         {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
             foreach (var room in LobbyRoomsManager.Rooms)
             {
                 ServerSend.LobbyRoom(fromClient, room);
@@ -45,6 +51,11 @@ namespace TNDDMMainServer
 
         public static void CreateRoom(int fromClient, Packet packet)
         {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
             string UUID = packet.ReadString();
             if (string.Equals(Server.clients[fromClient].UUID , UUID))
             {
@@ -64,22 +75,42 @@ namespace TNDDMMainServer
 
         public static void LoginRoom(int fromClient , Packet packet)
         {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
             string roomUUID = packet.ReadString();
             LobbyRoomsManager.EnterRoom(fromClient, roomUUID);
         }
 
         public static void ToggleReady(int fromClient, Packet packet)
         {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
             LobbyRoomsManager.ToggleReady(fromClient);
         }
 
         public static void ExitRoom(int fromClient , Packet packet)
         {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
             LobbyRoomsManager.ExitRoom(fromClient);
         }
 
         public static void StartRoom(int fromClient , Packet packet)
         {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
             LobbyRoomsManager.StartGame(fromClient);
         }
     }

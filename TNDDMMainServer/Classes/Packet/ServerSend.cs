@@ -97,7 +97,7 @@ namespace TNDDMMainServer
             }
         }
 
-        public static void RoomStarted(int toClient , LobbyRoom room , string ip , int port , string token , string clientUUID)
+        public static void RoomStarted(int toClient , LobbyRoom room , string ip , int port , string token)
         {
             using (Packet packet = new Packet((int)ServerPackets.RoomStarted))
             {
@@ -105,7 +105,6 @@ namespace TNDDMMainServer
                 packet.Write(ip);
                 packet.Write(port);
                 packet.Write(token);
-                packet.Write(clientUUID);
 
                 SendTCPData(toClient, packet);
             }
