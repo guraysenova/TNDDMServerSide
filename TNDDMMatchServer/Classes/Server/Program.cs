@@ -11,6 +11,8 @@ namespace TNDDMMatchServer
 
         private static bool isRunning = false;
 
+        private static Match match;
+
         static void Main(string[] args)
         {
             Console.Title = "TNDDM Match Server" + " " + version;
@@ -20,12 +22,10 @@ namespace TNDDMMatchServer
             Thread mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
             Console.WriteLine("test");
-            // TODO: GET PORT FROM DATABASE!!!!!!!!
-            foreach (var arg in args.ToList())
-            {
-                Console.WriteLine(arg);
-            }
-            //Server.StartServer(100, 26951);
+            int port = Int32.Parse(args[0]);
+
+            match = new Match(args[1], args[2], args[3], args[4], args[5], args[6] , args[7]);
+            Server.StartServer(2, port);
         }
 
         private static void MainThread()
@@ -46,6 +46,14 @@ namespace TNDDMMatchServer
                         Thread.Sleep(nextLoop - DateTime.Now);
                     }
                 }
+            }
+        }
+
+        public static Match Match
+        {
+            get
+            {
+                return match;
             }
         }
     }

@@ -109,10 +109,10 @@ namespace TNDDMMainServer
                         port.ToString() , 
                         room.UUID , 
                         room.Players[0].playerUUID ,
-                        room.Players[1].playerUUID ,
                         room.Players[0].token ,
-                        room.Players[1].token ,
                         room.Players[0].playerName ,
+                        room.Players[1].playerUUID ,
+                        room.Players[1].token ,
                         room.Players[1].playerName
                     };
 

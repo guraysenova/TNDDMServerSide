@@ -21,7 +21,8 @@ namespace TNDDMMatchServer
 
             if (TokenManager.IsTokenValid(clientGivenRoomUUID, clientUUID, token))
             {
-                Console.WriteLine("User : " + Server.clients[fromClient].clientName + " connected with the correct token");
+                Server.clients[fromClient].isTokenChecked = true;
+                Console.WriteLine("User connected with the correct token");
             }
             else
             {

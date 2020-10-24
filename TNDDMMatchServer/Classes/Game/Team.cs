@@ -6,5 +6,26 @@ namespace TNDDMMatchServer.Classes.Game
 {
     class Team
     {
+        List<Player> players = new List<Player>();
+
+        TeamEnum teamEnum;
+
+        public Team(List<Player> players , TeamEnum team)
+        {
+            this.players = players;
+        }
+
+        public Team(Player player, TeamEnum team)
+        {
+            this.players = new List<Player>() { player };
+        }
+
+        public List<Player> Players
+        {
+            get
+            {
+                return players;
+            }
+        }
     }
 }

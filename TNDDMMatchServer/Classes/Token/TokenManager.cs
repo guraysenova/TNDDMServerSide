@@ -66,11 +66,7 @@ namespace TNDDMMatchServer
 
         public static bool IsTokenValid(string roomUUID , string userUUID, string token)
         {
-            bool isValid = false;
-
-            // TODO: GET BOTH PLAYERS CHECK IF ONE MATCHES
-
-            return isValid;
+            return MatchServer.Match.IsCorrectToken(roomUUID, userUUID, token);
         }
 
 
