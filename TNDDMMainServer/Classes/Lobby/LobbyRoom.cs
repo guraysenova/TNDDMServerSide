@@ -102,6 +102,10 @@ namespace TNDDMMainServer
 
         public bool Started
         {
+            get
+            {
+                return started;
+            }
             set
             {
                 started = value;

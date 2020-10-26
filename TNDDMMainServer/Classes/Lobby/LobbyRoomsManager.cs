@@ -65,11 +65,11 @@ namespace TNDDMMainServer
 
         public static void ExitRoom(int playerIndex)
         {
-            if(GetRoom(Server.clients[playerIndex].UUID) != null)
+            if(Server.clients[playerIndex] != null && GetRoom(Server.clients[playerIndex].UUID) != null)
             {
                 foreach (var room in rooms)
                 {
-                    if (string.Equals(room.UUID, GetRoom(Server.clients[playerIndex].UUID).UUID))
+                    if (!room.Started && string.Equals(room.UUID, GetRoom(Server.clients[playerIndex].UUID).UUID))
                     {
                         room.RemovePlayer(playerIndex);
                         break;
@@ -129,6 +129,8 @@ namespace TNDDMMainServer
                     foreach (PlayerData player in room.Players)
                     {
                         ServerSend.RoomStarted(player.index , room, "127.0.0.1" , port , player.token);
+                        Server.clients[player.index].tcp.socket.Client.Shutdown(System.Net.Sockets.SocketShutdown.Both);
+
                     }
 
                     return;

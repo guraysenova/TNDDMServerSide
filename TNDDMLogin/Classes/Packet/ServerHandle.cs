@@ -25,6 +25,8 @@ namespace TNDDMLogin
             TokenManager.AddToken(userUUID, token);
 
             ServerSend.Token(fromClient , token, "127.0.0.1", 26951 , userUUID);
+
+            Server.clients[fromClient].tcp.socket.Client.Shutdown(System.Net.Sockets.SocketShutdown.Both);
         }
     }
 }
