@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using TNDDMMainServer.Classes.Token;
+using System.Threading;
 
 namespace TNDDMMainServer
 {
@@ -122,6 +123,8 @@ namespace TNDDMMainServer
                     }
                     
                     matchServer.Start();
+
+                    Thread.Sleep(400);
 
                     foreach (PlayerData player in room.Players)
                     {
