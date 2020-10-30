@@ -10,6 +10,8 @@ namespace TNDDMMatchServer
         List<Team> teams = new List<Team>();
         MatchData matchData = null;
 
+        int turnIndex;
+
         public Match(string roomUUID , string playerOneUUID , string playerOneToken , string playerOneName, string playerTwoUUID, string playerTwoToken, string playerTwoName)
         {
             matchData = new MatchData(roomUUID);
@@ -22,6 +24,8 @@ namespace TNDDMMatchServer
 
             teams.Add(teamOne);
             teams.Add(teamTwo);
+
+            turnIndex = 0;
         }
 
 
@@ -37,7 +41,7 @@ namespace TNDDMMatchServer
             {
                 foreach (Player player in team.Players)
                 {
-                    if(String.Equals(player.PlayerLoginData.UUID , playerUUID) && String.Equals(player.PlayerLoginData.Token, playerToken))
+                    if(String.Equals(player.UUID , playerUUID) && String.Equals(player.Token, playerToken))
                     {
                         return true;
                     }

@@ -6,5 +6,6 @@ namespace TNDDMMatchServer.Classes.Game.RollingDice
 {
     class DiceSide
     {
+
     }
 }

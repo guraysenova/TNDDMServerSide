@@ -6,17 +6,64 @@ namespace TNDDMMatchServer.Classes.Game
 {
     class Player
     {
-        PlayerLoginData playerLoginData;
+        PlayerLoginData playerData;
+
+        TurnEnum turn;
+
         public Player(PlayerLoginData playerLoginData)
         {
-            this.playerLoginData = playerLoginData;
+            turn = TurnEnum.None;
+            playerData = playerLoginData;
         }
 
-        public PlayerLoginData PlayerLoginData
+        public string UUID
         {
             get
             {
-                return playerLoginData;
+                return playerData.UUID;
+            }
+        }
+        public string Token
+        {
+            get
+            {
+                return playerData.Token;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return playerData.Name;
+            }
+        }
+
+        public PlayerEnum PlayerEnum
+        {
+            get
+            {
+                return playerData.PlayerEnum;
+            }
+        }
+
+        public TeamEnum TeamEnum
+        {
+            get
+            {
+                return playerData.TeamEnum;
+            }
+        }
+
+        public TurnEnum Turn
+        {
+            get
+            {
+                return turn;
+            }
+            set
+            {
+                turn = value;
             }
         }
     }

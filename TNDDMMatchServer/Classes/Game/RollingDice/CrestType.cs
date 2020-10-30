@@ -1,4 +1,4 @@
-﻿namespace TNDDMMatchServer.Classes.Game.RollingDice
+﻿namespace TNDDMMatchServer.Classes
 {
     public enum CrestType
     {
