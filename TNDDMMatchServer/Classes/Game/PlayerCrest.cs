@@ -4,26 +4,19 @@ using System.Text;
 
 namespace TNDDMMatchServer.Classes
 {
-    class DiceSide
+    [System.Serializable]
+    class PlayerCrest
     {
         Crest crest;
         int amount = 0;
 
-        public DiceSide(Crest crest, int amount = 1)
+        public PlayerCrest(Crest crest , int amount = 0)
         {
             this.crest = crest;
             this.amount = amount;
         }
 
-        public Crest Crest
-        {
-            get
-            {
-                return crest;
-            }
-        }
-
-        public bool IsCrest(CrestType crestType, int crestLevel)
+        public bool IsCrest(CrestType crestType , int crestLevel = 1)
         {
             return crest.CrestType == crestType && crest.CrestLevel == crest.CrestLevel;
         }
@@ -33,6 +26,10 @@ namespace TNDDMMatchServer.Classes
             get
             {
                 return amount;
+            }
+            set
+            {
+                amount = value;
             }
         }
     }

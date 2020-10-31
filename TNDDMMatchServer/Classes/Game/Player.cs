@@ -6,16 +6,49 @@ namespace TNDDMMatchServer.Classes.Game
 {
     class Player
     {
-        PlayerLoginData playerData;
-
         TurnEnum turn;
+
+        DicePool dicePool;
+
+        CrestPool crestPool;
 
         public Player(PlayerLoginData playerLoginData)
         {
             turn = TurnEnum.None;
             playerData = playerLoginData;
+            dicePool = new DicePool();
+            crestPool = new CrestPool();
         }
 
+        public CrestPool Crests
+        {
+            get
+            {
+                return crestPool;
+            }
+            set
+            {
+                crestPool = value;
+            }
+        }
+
+        public DicePool Dices
+        {
+            get
+            {
+                return dicePool;
+            }
+            set
+            {
+                dicePool = value;
+            }
+        }
+
+        #region Data
+
+        PlayerLoginData playerData;
+
+        #region Login Data
         public string UUID
         {
             get
@@ -54,6 +87,8 @@ namespace TNDDMMatchServer.Classes.Game
                 return playerData.TeamEnum;
             }
         }
+        #endregion
+        #region Turn Data
 
         public TurnEnum Turn
         {
@@ -66,5 +101,32 @@ namespace TNDDMMatchServer.Classes.Game
                 turn = value;
             }
         }
+
+        public bool CanRoll
+        {
+            get
+            {
+                return turn == TurnEnum.Roll;
+            }
+        }
+
+        public bool CanPlay
+        {
+            get
+            {
+                return turn == TurnEnum.Play;
+            }
+        }
+
+        public bool IsTurn
+        {
+            get
+            {
+                return turn != TurnEnum.None || turn != TurnEnum.Finished;
+            }
+        }
+        #endregion
+
+        #endregion
     }
 }
