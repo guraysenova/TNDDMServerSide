@@ -1,0 +1,73 @@
+{
+	"monsters": [
+		{
+			"monsterID": "darkKnight",
+			"monsterName": "Knight",
+			"monsterType": "Dark",
+			"stars": 2,
+			"speed": 1,
+			"health": 10,
+			"attackPower": 2,
+			"defensePower": 2,
+			"specialAbilities": [
+				{
+					"abilityID": "rangedAttack"
+				}
+			],
+			"summonCosts": [
+				{
+					"crestType": "SummonCrest",
+					"crestTier": 1,
+					"crestAmount": 2
+				}
+			]
+		}
+	],
+
+	"specialAbilities": [
+		{
+			"abilityID": "rangedAttack",
+			"abilityName": "Ranged Attack",
+			"abilityType": "Attack",
+			"abilityUseType": "Enemy",
+			"abilityCosts": [
+				{
+					"crestType": "AttackCrest",
+					"crestAmount": 2
+				}
+			]
+		}
+	],
+
+	"spells": [
+		{
+			"spellID": "resurrect",
+			"spellName": "Resurrection of the dead",
+			"spellType": "Resurrect",
+			"spellUseType": "Dead",
+			"spellForce": 1,
+			"spellUseAmount": 1,
+			"summonCosts": [
+				{
+					"crestType": "SpellCrest",
+					"crestAmount": 2
+				}
+			]
+		}
+	],
+
+	"traps": [
+		{
+			"trapID": "proximity",
+			"trapName": "Mine",
+			"trapType": "Mine",
+			"trapUseType": "Enemy",
+			"summonCosts": [
+				{
+					"crestType": "TrapCrest",
+					"crestAmount": 2
+				}
+			]
+		}
+	]
+}
