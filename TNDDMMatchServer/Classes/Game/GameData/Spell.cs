@@ -25,5 +25,8 @@ namespace TNDDMMatchServer.Classes.Game.GameData
 
         [JsonProperty("summonCosts")]
         public List<SummonCost> SummonCosts;
+
+        [JsonProperty("description")]
+        public string Description;
     }
 }

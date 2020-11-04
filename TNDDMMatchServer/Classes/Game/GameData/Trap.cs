@@ -17,7 +17,19 @@ namespace TNDDMMatchServer.Classes.Game.GameData
         [JsonProperty("trapUseType")]
         public string TrapUseType;
 
+        [JsonProperty("health")]
+        public int Health;
+
+        [JsonProperty("attackPower")]
+        public int AttackPower;
+
+        [JsonProperty("defensePower")]
+        public int DefensePower;
+
         [JsonProperty("summonCosts")]
         public List<SummonCost> SummonCosts;
+
+        [JsonProperty("description")]
+        public string Description;
     }
 }

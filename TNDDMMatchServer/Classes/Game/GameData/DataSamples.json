@@ -3,7 +3,8 @@
 		{
 			"monsterID": "darkKnight",
 			"monsterName": "Knight",
-			"monsterType": "Dark",
+			"monsterType": "Normal",
+			"monsterNature": "Dark",
 			"stars": 2,
 			"speed": 1,
 			"health": 10,
@@ -14,28 +15,38 @@
 					"abilityID": "rangedAttack"
 				}
 			],
+			"passiveAbilities": [
+				{
+					"abilityID": "rangedAttack"
+				}
+			],
 			"summonCosts": [
 				{
 					"crestType": "SummonCrest",
 					"crestTier": 1,
 					"crestAmount": 2
 				}
-			]
+			],
+			"description": "This is a monster."
 		}
 	],
 
-	"specialAbilities": [
+	"abilities": [
 		{
 			"abilityID": "rangedAttack",
 			"abilityName": "Ranged Attack",
 			"abilityType": "Attack",
 			"abilityUseType": "Enemy",
+			"health": 10,
+			"attackPower": 2,
+			"defensePower": 2,
 			"abilityCosts": [
 				{
 					"crestType": "AttackCrest",
 					"crestAmount": 2
 				}
-			]
+			],
+			"description": "This is a ranged attack."
 		}
 	],
 
@@ -52,7 +63,8 @@
 					"crestType": "SpellCrest",
 					"crestAmount": 2
 				}
-			]
+			],
+			"description": "This is a spell."
 		}
 	],
 
@@ -67,7 +79,8 @@
 					"crestType": "TrapCrest",
 					"crestAmount": 2
 				}
-			]
+			],
+			"description": "Player can resurrect any dead monster."
 		}
 	]
 }

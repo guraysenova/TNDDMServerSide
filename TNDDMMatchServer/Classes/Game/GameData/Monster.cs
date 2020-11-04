@@ -14,6 +14,9 @@ namespace TNDDMMatchServer.Classes.Game.GameData
         [JsonProperty("monsterType")]
         public string MonsterType;
 
+        [JsonProperty("monsterNature")]
+        public string MonsterNature;
+
         [JsonProperty("stars")]
         public int Stars;
 
@@ -30,9 +33,15 @@ namespace TNDDMMatchServer.Classes.Game.GameData
         public int DefensePower;
 
         [JsonProperty("specialAbilities")]
-        public List<SpecialAbility> SpecialAbilities;
+        public List<Ability> SpecialAbilities;
+
+        [JsonProperty("passiveAbilities")]
+        public List<Ability> PassiveAbilities;
 
         [JsonProperty("summonCosts")]
         public List<SummonCost> SummonCosts;
+
+        [JsonProperty("description")]
+        public string Description;
     }
 }

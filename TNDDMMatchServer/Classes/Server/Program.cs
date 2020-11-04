@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using TNDDMMatchServer.Classes.Game.GameData;
 
 namespace TNDDMMatchServer
 {
@@ -10,8 +11,6 @@ namespace TNDDMMatchServer
         static string version = "v0.1a";
 
         private static bool isRunning = false;
-
-        private static Match match;
 
         static void Main(string[] args)
         {
@@ -24,7 +23,8 @@ namespace TNDDMMatchServer
             Console.WriteLine("test");
             int port = Int32.Parse(args[0]);
 
-            match = new Match(args[1], args[2], args[3], args[4], args[5], args[6] , args[7]);
+            Match = new Match(args[1], args[2], args[3], args[4], args[5], args[6] , args[7]);
+            
             Server.StartServer(2, port);
         }
 
@@ -49,12 +49,6 @@ namespace TNDDMMatchServer
             }
         }
 
-        public static Match Match
-        {
-            get
-            {
-                return match;
-            }
-        }
+        public static Match Match { get; private set; }
     }
 }

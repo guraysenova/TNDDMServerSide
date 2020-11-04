@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TNDDMMatchServer.Classes.Game.GameData
 {
-    public class SpecialAbility
+    public class Ability
     {
         [JsonProperty("abilityID")]
         public string AbilityID;
@@ -19,5 +19,8 @@ namespace TNDDMMatchServer.Classes.Game.GameData
 
         [JsonProperty("abilityCosts")]
         public List<AbilityCost> AbilityCosts;
+
+        [JsonProperty("description")]
+        public string Description;
     }
 }
