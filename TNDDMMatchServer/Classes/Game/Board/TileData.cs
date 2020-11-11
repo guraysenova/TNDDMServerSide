@@ -16,6 +16,8 @@ namespace TNDDMMatchServer.Classes.Game.Board
 
         public bool hasPortal;
 
+        public string TileNature { get; set; }
+
         public int portalX;
         public int portalY;
 
