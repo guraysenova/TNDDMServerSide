@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TNDDMMatchServer.Classes.Game.Board.Pathfinding;
 using TNDDMMatchServer.Classes.Game.Board.UnfoldingDice;
+using TNDDMMatchServer.Classes.Game.GameData;
 
 namespace TNDDMMatchServer.Classes.Game.Board
 {
@@ -11,6 +12,8 @@ namespace TNDDMMatchServer.Classes.Game.Board
         List<TileData> tileData = new List<TileData>();
 
         PathFinder pathFinder = new PathFinder();
+
+        GameDataReader data = new GameDataReader();
 
         public Board(TwoDCoordinate _boardSize)
         {

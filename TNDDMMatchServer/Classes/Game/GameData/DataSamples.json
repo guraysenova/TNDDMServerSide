@@ -2,7 +2,7 @@
 	"monsters": [
 		{
 			"monsterID": "darkKnight",
-			"monsterName": "Knight",
+			"monsterName": "Dark Knight",
 			"monsterType": "Normal",
 			"monsterNature": "Dark",
 			"stars": 2,
@@ -37,9 +37,6 @@
 			"abilityName": "Ranged Attack",
 			"abilityType": "Attack",
 			"abilityUseType": "Enemy",
-			"health": 10,
-			"attackPower": 2,
-			"defensePower": 2,
 			"abilityCosts": [
 				{
 					"crestType": "AttackCrest",

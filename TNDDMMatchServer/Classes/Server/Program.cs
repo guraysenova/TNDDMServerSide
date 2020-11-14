@@ -21,7 +21,7 @@ namespace TNDDMMatchServer
             Thread mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
             Console.WriteLine("test");
-            int port = Int32.Parse(args[0]);
+            int port = int.Parse(args[0]);
 
             Match = new Match(args[1], args[2], args[3], args[4], args[5], args[6] , args[7]);
             
