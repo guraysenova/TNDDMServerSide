@@ -265,6 +265,11 @@ namespace TNDDMMatchServer.Classes.Game.Board
             return null;
         }
 
+        public void PlayerOrder()
+        {
+            // get player order with different inputs for  different types of cases
+        }
+
     }
 
     public enum Rotation
