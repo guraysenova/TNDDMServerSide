@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace TNDDMMatchServer.Classes.Game.Board
 {
@@ -11,7 +12,9 @@ namespace TNDDMMatchServer.Classes.Game.Board
             y = _y;
         }
 
+        [JsonProperty("x")]
         public int x;
+        [JsonProperty("y")]
         public int y;
 
         public static int Distance(TwoDCoordinate first, TwoDCoordinate second)

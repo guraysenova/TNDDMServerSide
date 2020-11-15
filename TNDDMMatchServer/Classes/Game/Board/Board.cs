@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TNDDMMatchServer.Classes.Game.Board.Pathfinding;
 using TNDDMMatchServer.Classes.Game.Board.UnfoldingDice;
 using TNDDMMatchServer.Classes.Game.GameData;
@@ -15,24 +16,30 @@ namespace TNDDMMatchServer.Classes.Game.Board
 
         GameDataReader data = new GameDataReader();
 
+        List<Agent> agents = new List<Agent>();
+
+        BattleCalculator battleCalculator = new BattleCalculator();
+
+        DiceUnfoldDataManager unfoldDataManager = new DiceUnfoldDataManager();
+
+        Agent GetAgent(int id)
+        {
+            if(agents.Count > id)
+            {
+                return agents[id];
+            }
+            else
+            {
+                Console.WriteLine("Agent with given ID is not found");
+                return null;
+            }
+        }
+
         public Board(TwoDCoordinate _boardSize)
         {
             boardSize = _boardSize;
             BoardInit();
             pathFinder.SetGrid(tileData, boardSize);
-        }
-
-        public PathFinder PathFinder
-        {
-            get
-            {
-                return pathFinder;
-            }
-        }
-
-        public List<TileData> GetTileData()
-        {
-            return tileData;
         }
 
         void BoardInit()
@@ -44,7 +51,6 @@ namespace TNDDMMatchServer.Classes.Game.Board
                     TileData myTile = new TileData();
                     TwoDCoordinate coordinate = new TwoDCoordinate((j * 2), (i * 2));
                     myTile.coordinates = coordinate;
-                    //GameObject tile = Instantiate(tilePrefab, new Vector3((j * 2), -0.05f, (i * 2)), Quaternion.Euler(0f, 0f, 0f));
 
                     if (i == 0 || i == boardSize.y - 1)
                     {
@@ -56,14 +62,10 @@ namespace TNDDMMatchServer.Classes.Game.Board
 
                                 if (i == 0)
                                 {
-                                    //GameObject playerTile = Instantiate(playerTilePrefab, new Vector3(((j) * 2), -0.05f, ((i - 1) * 2)), Quaternion.Euler(0f, 0f, 0f));
-                                    //playerTile.transform.SetParent(gameObject.transform);
                                     myTile.AddTeam(TeamEnum.Team1);
                                 }
                                 if (i == boardSize.y - 1)
                                 {
-                                    //GameObject playerTile = Instantiate(playerTilePrefab, new Vector3(((j) * 2), -0.05f, ((i + 1) * 2)), Quaternion.Euler(0f, 0f, 0f));
-                                    //playerTile.transform.SetParent(gameObject.transform);
                                     myTile.AddTeam(TeamEnum.Team2);
                                 }
                             }
@@ -71,12 +73,11 @@ namespace TNDDMMatchServer.Classes.Game.Board
                     }
 
                     tileData.Add(myTile);
-                    //tile.transform.SetParent(gameObject.transform);
                 }
             }
         }
 
-        public bool CanPlace(DiceUnfoldData diceUnfoldData, TwoDCoordinate objPos, Rotation rotation, TeamEnum team)
+        bool CanPlace(DiceUnfoldData diceUnfoldData, TwoDCoordinate objPos, Rotation rotation, TeamEnum team)
         {
             bool canPlace = false;
 
@@ -137,7 +138,7 @@ namespace TNDDMMatchServer.Classes.Game.Board
             return canPlace;
         }
 
-        public void PlaceBox(DiceUnfoldData diceUnfoldData, TwoDCoordinate objPos, Rotation rotation, TeamEnum team)
+        void PlaceBox(DiceUnfoldData diceUnfoldData, TwoDCoordinate objPos, Rotation rotation, TeamEnum team)
         {
             if (CanPlace(diceUnfoldData, objPos, rotation, team))
             {
@@ -195,7 +196,7 @@ namespace TNDDMMatchServer.Classes.Game.Board
             }
         }
 
-        public void PlacePortal(TwoDCoordinate startPos, TwoDCoordinate endPos)
+        void PlacePortal(TwoDCoordinate startPos, TwoDCoordinate endPos)
         {
             foreach (TileData tile in tileData)
             {

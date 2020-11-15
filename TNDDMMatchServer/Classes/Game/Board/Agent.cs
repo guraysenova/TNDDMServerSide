@@ -5,11 +5,12 @@ using TNDDMMatchServer.Classes.Game.GameData;
 
 namespace TNDDMMatchServer.Classes.Game.Board
 {
-    class Agent
+    public class Agent
     {
-        public Agent(AgentType agentType , PlayerEnum playerEnum , TileData tileData , Monster monsterData = null , Spell spellData = null , Trap trapData = null)
+        public Agent(AgentType agentType , int id ,PlayerEnum playerEnum , TileData tileData , Monster monsterData = null , Spell spellData = null , Trap trapData = null )
         {
             Player = playerEnum;
+            ID = id;
             AgentType = agentType;
             TileData = tileData;
             MonsterData = monsterData;

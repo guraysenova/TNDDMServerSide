@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TNDDMMatchServer.Classes.Game.Board
 {
-    enum AgentType
+    public enum AgentType
     {
         Monster = 0,
         Spell = 1,
