@@ -9,13 +9,22 @@ namespace TNDDMMatchServer
     public enum ServerPackets
     {
         MatchTokenRequest = 9,
-        MatchStarted = 10
+        MatchStarted = 10,
+        PlaceBox = 11,
+        MoveAgent = 12,
+        Attack = 13,
+        EndTurn = 14
     }
 
     /// <summary>Sent from client to server.</summary>
     public enum ClientPackets
     {
-        MatchToken = 10
+        MatchToken = 10,
+        Ready = 11,
+        PlaceBox = 12,
+        MoveAgent = 13,
+        Attack = 14,
+        EndTurn = 15
     }
 
     public class Packet : IDisposable
