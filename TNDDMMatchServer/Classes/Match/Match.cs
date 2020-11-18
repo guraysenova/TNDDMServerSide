@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TNDDMMatchServer.Classes;
-using TNDDMMatchServer.Classes.Game;
+using TNDDMMatchServer.Classes.GameScripts;
 
 namespace TNDDMMatchServer
 {
@@ -9,8 +9,7 @@ namespace TNDDMMatchServer
     {
         List<Team> teams = new List<Team>();
         MatchData matchData = null;
-
-        int turnIndex;
+        public Game Game { get; }
 
         public Match(string roomUUID , string playerOneUUID , string playerOneToken , string playerOneName, string playerTwoUUID, string playerTwoToken, string playerTwoName)
         {
@@ -25,7 +24,7 @@ namespace TNDDMMatchServer
             teams.Add(teamOne);
             teams.Add(teamTwo);
 
-            turnIndex = 0;
+            Game = new Game(teams);
         }
 
 

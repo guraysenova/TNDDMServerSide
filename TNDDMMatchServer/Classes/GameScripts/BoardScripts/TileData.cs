@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace TNDDMMatchServer.Classes.GameScripts.BoardScripts
+{
+    [Serializable]
+    public class TileData
+    {
+        public TwoDCoordinate coordinates;
+
+        public bool isFilled;
+
+        public bool isConnected;
+
+        public List<TeamEnum> teams = new List<TeamEnum>();
+
+        public bool hasPortal;
+
+        public string TileNature { get; set; }
+
+        public int portalX;
+        public int portalY;
+
+        public void AddTeam(TeamEnum team)
+        {
+            if (!DoesTeamExist(team))
+            {
+                teams.Add(team);
+            }
+        }
+
+        public bool DoesTeamExist(TeamEnum teamVal)
+        {
+            return teams.Contains(teamVal);
+        }
+    }
+}

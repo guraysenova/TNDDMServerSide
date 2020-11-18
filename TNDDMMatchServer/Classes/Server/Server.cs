@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 
 namespace TNDDMMatchServer
 {
@@ -61,7 +60,12 @@ namespace TNDDMMatchServer
 
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
-                {(int)ClientPackets.MatchToken , ServerHandle.MatchToken }
+                {(int)ClientPackets.MatchToken , ServerHandle.MatchToken },
+                {(int)ClientPackets.Ready , ServerHandle.Ready },
+                {(int)ClientPackets.PlaceBox , ServerHandle.PlaceBox },
+                {(int)ClientPackets.MoveAgent , ServerHandle.MoveAgent },
+                {(int)ClientPackets.Attack , ServerHandle.Attack },
+                {(int)ClientPackets.EndTurn , ServerHandle.EndTurn }
             };
         }
     }

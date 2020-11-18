@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TNDDMMatchServer
 {
@@ -29,6 +27,61 @@ namespace TNDDMMatchServer
                 Server.clients[fromClient].tcp.Disconnect();
                 Console.WriteLine("User connected with the incorrect token");
             }
+        }
+
+        public static void Ready(int fromClient , Packet packet)
+        {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
+
+
+        }
+
+        public static void PlaceBox(int fromClient , Packet packet)
+        {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
+
+
+        }
+
+        public static void MoveAgent(int fromClient, Packet packet)
+        {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
+
+
+        }
+
+        public static void Attack(int fromClient, Packet packet)
+        {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
+
+
+        }
+
+        public static void EndTurn(int fromClient, Packet packet)
+        {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
+
+
         }
     }
 }
