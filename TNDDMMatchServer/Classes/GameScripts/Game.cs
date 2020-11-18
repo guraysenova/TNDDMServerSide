@@ -5,14 +5,19 @@ namespace TNDDMMatchServer.Classes.GameScripts
 {
     class Game
     {
-        public Board Board { get; }
+        Board board;
+
         List<Team> teams;
+
         GameType gameType;
+
         public Game(List<Team> teams , GameType gameType = GameType.Classic)
         {
             this.teams = teams;
             this.gameType = gameType;
-            Board = new Board(new TwoDCoordinate(23, 35));
+            board = new Board(new TwoDCoordinate(23, 35));
         }
+
+        // Attack , move , turn etc functions
     }
 }
