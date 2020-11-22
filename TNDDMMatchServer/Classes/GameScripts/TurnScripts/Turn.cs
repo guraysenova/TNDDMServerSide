@@ -1,40 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TNDDMMatchServer.Classes.GameScripts.TurnScripts
+﻿namespace TNDDMMatchServer.Classes.GameScripts.TurnScripts
 {
     class Turn
     {
-        List<Team> teams;
-
-        int turnCount;
-
-        int playerCount;
-
-        public TurnData TurnData { get; }
-
-        public Turn(List<Team> teams)
+        public int TeamIndex { get; set; }
+        public int PlayerIndexInTeam { get; set; }
+        public TurnPhase Phase { get; set; }
+        public Turn()
         {
-            turnCount = 0;
-            this.teams = teams;
-            TurnData = new TurnData();
-
-            foreach (var team in teams)
-            {
-                playerCount += team.Players.Count;
-            }
-        }
-
-        public void AdvancePhase()
-        {
-            if(TurnData.Phase == TurnPhase.Battle)
-            {
-                turnCount++;
-                TurnData.TeamIndex = (TurnData.TeamIndex + 1) % teams.Count;
-                TurnData.Phase = TurnPhase.Roll;
-                TurnData.PlayerIndexInTeam = (turnCount % playerCount) / teams.Count;
-            }
+            TeamIndex = 0;
+            PlayerIndexInTeam = 0;
+            Phase = TurnPhase.Roll;
         }
     }
 }
