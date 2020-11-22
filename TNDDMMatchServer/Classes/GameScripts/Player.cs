@@ -6,15 +6,12 @@ namespace TNDDMMatchServer.Classes.GameScripts
 {
     class Player
     {
-        TurnEnum turn;
-
         DicePool dicePool;
 
         CrestPool crestPool;
 
         public Player(PlayerLoginData playerLoginData)
         {
-            turn = TurnEnum.None;
             playerData = playerLoginData;
             dicePool = new DicePool();
             crestPool = new CrestPool();
@@ -88,44 +85,7 @@ namespace TNDDMMatchServer.Classes.GameScripts
             }
         }
         #endregion
-        #region Turn Data
 
-        public TurnEnum Turn
-        {
-            get
-            {
-                return turn;
-            }
-            set
-            {
-                turn = value;
-            }
-        }
-
-        public bool CanRoll
-        {
-            get
-            {
-                return turn == TurnEnum.Roll;
-            }
-        }
-
-        public bool CanPlay
-        {
-            get
-            {
-                return turn == TurnEnum.Play;
-            }
-        }
-
-        public bool IsTurn
-        {
-            get
-            {
-                return turn != TurnEnum.None || turn != TurnEnum.Finished;
-            }
-        }
-        #endregion
 
         #endregion
     }

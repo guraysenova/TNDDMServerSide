@@ -14,8 +14,6 @@ namespace TNDDMMatchServer.Classes.GameScripts.BoardScripts
 
         PathFinder pathFinder;
 
-        GameDataReader data;
-
         List<Agent> agents;
 
         BattleCalculator battleCalculator;
@@ -42,7 +40,6 @@ namespace TNDDMMatchServer.Classes.GameScripts.BoardScripts
             BoardInit();
             pathFinder.SetGrid(tileData, boardSize);
             battleCalculator = new BattleCalculator();
-            data = new GameDataReader();
             unfoldDataManager = new DiceUnfoldDataManager();
             agents = new List<Agent>();
             pathFinder = new PathFinder();
@@ -269,11 +266,6 @@ namespace TNDDMMatchServer.Classes.GameScripts.BoardScripts
                 }
             }
             return null;
-        }
-
-        public void PlayerOrder()
-        {
-            // get player order with different inputs for  different types of cases
         }
     }
 
