@@ -20,7 +20,7 @@ namespace TNDDMMatchServer.Classes.GameScripts.BoardScripts
 
         DiceUnfoldDataManager unfoldDataManager;
 
-        Agent GetAgent(int id)
+        public Agent GetAgent(int id)
         {
             if(agents.Count > id)
             {
@@ -266,6 +266,20 @@ namespace TNDDMMatchServer.Classes.GameScripts.BoardScripts
                 }
             }
             return null;
+        }
+
+        TwoDCoordinate GetCordAtIndex(int index)
+        {
+            if(tileData.Count > index)
+            {
+                return tileData[index].coordinates;
+            }
+            return null;
+        }
+
+        public bool CanPlace(TeamEnum team , int targetTileIndex, int diceUnfoldDataIndex, bool isMirrored, int rotation)
+        {
+            return CanPlace(unfoldDataManager.GetDiceUnfoldData(diceUnfoldDataIndex, isMirrored), GetCordAtIndex(targetTileIndex), (Rotation)rotation, team);
         }
     }
 

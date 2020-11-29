@@ -32,14 +32,18 @@ namespace TNDDMMatchServer.Classes.GameScripts.GameData
         [JsonProperty("defensePower")]
         public int DefensePower;
 
+
+        [JsonProperty("baseRange")]
+        public int BaseRange;
+
         [JsonProperty("specialAbilities")]
         public List<Ability> SpecialAbilities;
 
         [JsonProperty("passiveAbilities")]
         public List<Ability> PassiveAbilities;
 
-        [JsonProperty("summonCosts")]
-        public List<SummonCost> SummonCosts;
+        [JsonProperty("costs")]
+        public List<Cost> Costs;
 
         [JsonProperty("description")]
         public string Description;

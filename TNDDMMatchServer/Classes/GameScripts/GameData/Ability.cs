@@ -17,8 +17,11 @@ namespace TNDDMMatchServer.Classes.GameScripts.GameData
         [JsonProperty("abilityUseType")]
         public string AbilityUseType;
 
-        [JsonProperty("abilityCosts")]
-        public List<AbilityCost> AbilityCosts;
+        [JsonProperty("range")]
+        public int Range;
+
+        [JsonProperty("costs")]
+        public List<Cost> Costs;
 
         [JsonProperty("description")]
         public string Description;

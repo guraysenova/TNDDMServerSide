@@ -2,7 +2,7 @@
 
 namespace TNDDMMatchServer.Classes.GameScripts.GameData
 {
-    public class SummonCost
+    public class Cost
     {
         [JsonProperty("crestType")]
         public string CrestType;

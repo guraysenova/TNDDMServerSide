@@ -10,6 +10,7 @@
 			"health": 10,
 			"attackPower": 2,
 			"defensePower": 2,
+			"baseRange": 1,
 			"specialAbilities": [
 				{
 					"abilityID": "rangedAttack"
@@ -20,7 +21,7 @@
 					"abilityID": "rangedAttack"
 				}
 			],
-			"summonCosts": [
+			"costs": [
 				{
 					"crestType": "SummonCrest",
 					"crestTier": 1,
@@ -37,9 +38,11 @@
 			"abilityName": "Ranged Attack",
 			"abilityType": "Attack",
 			"abilityUseType": "Enemy",
-			"abilityCosts": [
+			"range": 4,
+			"costs": [
 				{
 					"crestType": "AttackCrest",
+					"crestTier": 1,
 					"crestAmount": 2
 				}
 			],
@@ -55,9 +58,10 @@
 			"spellUseType": "Dead",
 			"spellForce": 1,
 			"spellUseAmount": 1,
-			"summonCosts": [
+			"costs": [
 				{
 					"crestType": "SpellCrest",
+					"crestTier": 1,
 					"crestAmount": 2
 				}
 			],
@@ -71,9 +75,10 @@
 			"trapName": "Mine",
 			"trapType": "Mine",
 			"trapUseType": "Enemy",
-			"summonCosts": [
+			"costs": [
 				{
 					"crestType": "TrapCrest",
+					"crestTier": 1,
 					"crestAmount": 2
 				}
 			],

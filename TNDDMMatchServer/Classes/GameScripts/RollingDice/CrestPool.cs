@@ -24,20 +24,36 @@ namespace TNDDMMatchServer.Classes
             };
         }
 
-        public bool HasCrests(CrestType crestType , int crestLevel , int crestAmount)
+        public bool HasCrests(RequestedCrestData requestedCrestData)
         {
             foreach (PlayerCrest crest in crests)
             {
-                if(crest.IsCrest(crestType , crestLevel) && crest.Amount >= crestAmount)
+                if(!crest.IsCrest(requestedCrestData.CrestType, requestedCrestData.CrestLevel))
+                {
+                    continue;
+                }
+                else if(crest.Amount >= requestedCrestData.CrestAmount)
                 {
                     return true;
                 }
-                if(crest.IsCrest(crestType, crestLevel) && crest.Amount < crestAmount)
+                else
                 {
                     return false;
                 }
             }
             return false;
+        }
+
+        public bool HasCrests(IEnumerable<RequestedCrestData> requestedCrests)
+        {
+            foreach (var requestedCrest in requestedCrests)
+            {
+                if (!HasCrests(requestedCrest))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public void AddCrests(List<DiceSide> rollResults)

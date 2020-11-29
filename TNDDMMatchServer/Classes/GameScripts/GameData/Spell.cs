@@ -23,8 +23,8 @@ namespace TNDDMMatchServer.Classes.GameScripts.GameData
         [JsonProperty("spellUseAmount")]
         public int SpellUseAmount;
 
-        [JsonProperty("summonCosts")]
-        public List<SummonCost> SummonCosts;
+        [JsonProperty("costs")]
+        public List<Cost> Costs;
 
         [JsonProperty("description")]
         public string Description;

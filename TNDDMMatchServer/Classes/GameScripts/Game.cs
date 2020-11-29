@@ -31,24 +31,57 @@ namespace TNDDMMatchServer.Classes.GameScripts
             return false;
         }
 
-        public bool CanAttack(string playerUUID , int agentIndex , int targetAgentIndex)
+        public bool CanAttack(string playerUUID , int agentIndex , int targetAgentIndex , int attackIndex)
         {
+            if(IsTurnAndPhase(playerUUID , TurnPhase.Battle))
+            {
+                if(board.GetAgent(agentIndex).MonsterData != null && 
+                   board.GetAgent(targetAgentIndex).MonsterData != null && 
+                   GetPlayer(playerUUID).HasCrests(RequestedCrestData.GetRequestedCrestDatasFromCosts(board.GetAgent(agentIndex).MonsterData.SpecialAbilities[attackIndex].Costs)))
+                {
+                    float distance = TwoDCoordinate.FlyDistance(board.GetAgent(agentIndex).TileData.coordinates, board.GetAgent(targetAgentIndex).TileData.coordinates);
+                    if(distance <= board.GetAgent(agentIndex).MonsterData.SpecialAbilities[attackIndex].Range)
+                    {
+                        return true;
+                    }
+                }
+            }
             return false;
         }
 
         public bool CanSummon(string playerUUID , string monsterID)
         {
+            if (GetPlayer(playerUUID).HasCrests(RequestedCrestData.GetRequestedCrestDatasFromCosts(gameData.GetMonster(monsterID).Costs)))
+            {
+                return true;
+            }
             return false;
         }
 
-        public bool CanPlace(string playerUUID , int targetTileIndex , int diceUnfoldDataIndex)
+        public bool CanPlace(string playerUUID , int targetTileIndex , int diceUnfoldDataIndex , bool isMirrored , int rotation)
         {
-            return false;
+            return board.CanPlace(GetPlayer(playerUUID).TeamEnum, targetTileIndex, diceUnfoldDataIndex, isMirrored, rotation);
         }
 
         public bool IsTurnAndPhase(string playerUUID , TurnPhase phase)
         {
-            return false;
+            return turnManager.IsPlayersTurnAndPhase(playerUUID, phase);
+        }
+
+        Player GetPlayer(string playerUUID)
+        {
+            foreach (Team team in teams)
+            {
+                foreach (Player player in team.Players)
+                {
+                    if(string.Equals(player.UUID , playerUUID))
+                    {
+                        return player;
+                    }
+                }
+            }
+
+            return null;
         }
         // Attack , move , turn etc functions
     }

@@ -29,6 +29,11 @@ namespace TNDDMMatchServer.Classes.GameScripts
             }
         }
 
+        public bool HasCrests(IEnumerable<RequestedCrestData> requestedCrests)
+        {
+            return crestPool.HasCrests(requestedCrests);
+        }
+
         public DicePool Dices
         {
             get

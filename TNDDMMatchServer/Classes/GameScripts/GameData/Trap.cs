@@ -26,8 +26,8 @@ namespace TNDDMMatchServer.Classes.GameScripts.GameData
         [JsonProperty("defensePower")]
         public int DefensePower;
 
-        [JsonProperty("summonCosts")]
-        public List<SummonCost> SummonCosts;
+        [JsonProperty("costs")]
+        public List<Cost> Costs;
 
         [JsonProperty("description")]
         public string Description;
