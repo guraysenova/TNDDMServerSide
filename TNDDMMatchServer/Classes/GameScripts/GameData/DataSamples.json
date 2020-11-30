@@ -11,6 +11,8 @@
 			"attackPower": 2,
 			"defensePower": 2,
 			"baseRange": 1,
+			"freeMovement": 2,
+			"moveMultiplier": 1,
 			"specialAbilities": [
 				{
 					"abilityID": "rangedAttack"

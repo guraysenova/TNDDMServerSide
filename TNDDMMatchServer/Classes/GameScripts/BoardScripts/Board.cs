@@ -281,6 +281,20 @@ namespace TNDDMMatchServer.Classes.GameScripts.BoardScripts
         {
             return CanPlace(unfoldDataManager.GetDiceUnfoldData(diceUnfoldDataIndex, isMirrored), GetCordAtIndex(targetTileIndex), (Rotation)rotation, team);
         }
+
+        public int GetPathDistance(int agentIndex, int targetTileIndex)
+        {
+            int distance = 0;
+
+            List<GridNode> path = pathFinder.GetPath(tileData, GetAgent(agentIndex).TileData.coordinates, GetCordAtIndex(targetTileIndex));
+
+            if (path != null && path.Count > 0)
+            {
+                distance = path.Count;
+            }
+
+            return distance;
+        }
     }
 
     public enum Rotation

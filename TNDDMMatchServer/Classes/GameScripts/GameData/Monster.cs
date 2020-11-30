@@ -32,9 +32,14 @@ namespace TNDDMMatchServer.Classes.GameScripts.GameData
         [JsonProperty("defensePower")]
         public int DefensePower;
 
-
         [JsonProperty("baseRange")]
-        public int BaseRange;
+        public int BaseRange;  // attack range
+
+        [JsonProperty("freeMovement")]
+        public int FreeMovement; // free movements we can make without any crests
+
+        [JsonProperty("moveMultiplier")]
+        public int MoveMultiplier; // movement points we get per movement crest
 
         [JsonProperty("specialAbilities")]
         public List<Ability> SpecialAbilities;

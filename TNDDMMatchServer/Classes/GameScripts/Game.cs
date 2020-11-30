@@ -28,7 +28,22 @@ namespace TNDDMMatchServer.Classes.GameScripts
 
         public bool CanMove(string playerUUID , int agentIndex , int targetTileIndex) // agent id , target tile etc
         {
-            return false;
+            int pointMultiplier = board.GetAgent(agentIndex).MonsterData.MoveMultiplier;
+
+            int movementPoints = 0;
+            movementPoints += board.GetAgent(agentIndex).MonsterData.FreeMovement;
+            movementPoints += (GetPlayer(playerUUID).Crests.MovementCrests.Amount * pointMultiplier);
+
+            int pathLength = board.GetPathDistance(agentIndex, targetTileIndex);
+         
+            if(pathLength == 0 || pathLength > movementPoints)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public bool CanAttack(string playerUUID , int agentIndex , int targetAgentIndex , int attackIndex)
@@ -83,6 +98,5 @@ namespace TNDDMMatchServer.Classes.GameScripts
 
             return null;
         }
-        // Attack , move , turn etc functions
     }
 }
