@@ -25,8 +25,30 @@ namespace TNDDMMatchServer.Classes.GameScripts
             gameData = new GameDataReader();
             turnManager = new TurnManager(this.teams);
         }
+        Player GetPlayer(string playerUUID)
+        {
+            foreach (Team team in teams)
+            {
+                foreach (Player player in team.Players)
+                {
+                    if (string.Equals(player.UUID, playerUUID))
+                    {
+                        return player;
+                    }
+                }
+            }
 
-        public bool CanMove(string playerUUID , int agentIndex , int targetTileIndex) // agent id , target tile etc
+            return null;
+        }
+
+        bool IsTurnAndPhase(string playerUUID, TurnPhase phase)
+        {
+            return turnManager.IsPlayersTurnAndPhase(playerUUID, phase);
+        }
+
+        #region CHECKS
+
+        bool CanMove(string playerUUID , int agentIndex , int targetTileIndex) // agent id , target tile etc
         {
             int pointMultiplier = board.GetAgent(agentIndex).MonsterData.MoveMultiplier;
 
@@ -46,7 +68,7 @@ namespace TNDDMMatchServer.Classes.GameScripts
             }
         }
 
-        public bool CanAttack(string playerUUID , int agentIndex , int targetAgentIndex , int attackIndex)
+        bool CanAttack(string playerUUID , int agentIndex , int targetAgentIndex , int attackIndex)
         {
             if(IsTurnAndPhase(playerUUID , TurnPhase.Battle))
             {
@@ -64,7 +86,7 @@ namespace TNDDMMatchServer.Classes.GameScripts
             return false;
         }
 
-        public bool CanSummon(string playerUUID , string monsterID)
+        bool CanSummon(string playerUUID , string monsterID)
         {
             if (GetPlayer(playerUUID).HasCrests(RequestedCrestData.GetRequestedCrestDatasFromCosts(gameData.GetMonster(monsterID).Costs)))
             {
@@ -73,30 +95,41 @@ namespace TNDDMMatchServer.Classes.GameScripts
             return false;
         }
 
-        public bool CanPlace(string playerUUID , int targetTileIndex , int diceUnfoldDataIndex , bool isMirrored , int rotation)
+        bool CanPlace(string playerUUID , int targetTileIndex , int diceUnfoldDataIndex , bool isMirrored , int rotation)
         {
             return board.CanPlace(GetPlayer(playerUUID).TeamEnum, targetTileIndex, diceUnfoldDataIndex, isMirrored, rotation);
         }
 
-        public bool IsTurnAndPhase(string playerUUID , TurnPhase phase)
+        bool CanRoll(string playerUUID)
         {
-            return turnManager.IsPlayersTurnAndPhase(playerUUID, phase);
+            return turnManager.IsPlayersTurnAndPhase(playerUUID, TurnPhase.Roll);
         }
 
-        Player GetPlayer(string playerUUID)
-        {
-            foreach (Team team in teams)
-            {
-                foreach (Player player in team.Players)
-                {
-                    if(string.Equals(player.UUID , playerUUID))
-                    {
-                        return player;
-                    }
-                }
-            }
+        #endregion
 
-            return null;
+        public bool Move(string playerUUID, int agentIndex, int targetTileIndex) // agent id , target tile etc
+        {
+            return false;
+        }
+
+        public bool Attack(string playerUUID, int agentIndex, int targetAgentIndex, int attackIndex)
+        {
+            return false;
+        }
+
+        public bool Summon(string playerUUID, string monsterID)
+        {
+            return false;
+        }
+
+        public bool Place(string playerUUID, int targetTileIndex, int diceUnfoldDataIndex, bool isMirrored, int rotation)
+        {
+            return false;
+        }
+
+        public bool Roll(string playerUUID)
+        {
+            return false;
         }
     }
 }

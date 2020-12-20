@@ -13,7 +13,8 @@ namespace TNDDMMatchServer
         PlaceBox = 11,
         MoveAgent = 12,
         Attack = 13,
-        EndTurn = 14
+        EndTurn = 14,
+        Rolled = 15
     }
 
     /// <summary>Sent from client to server.</summary>
@@ -24,7 +25,8 @@ namespace TNDDMMatchServer
         PlaceBox = 12,
         MoveAgent = 13,
         Attack = 14,
-        EndTurn = 15
+        EndTurn = 15,
+        Roll = 16
     }
 
     public class Packet : IDisposable

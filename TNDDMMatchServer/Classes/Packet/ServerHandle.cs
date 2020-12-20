@@ -83,5 +83,16 @@ namespace TNDDMMatchServer
 
 
         }
+
+        public static void Roll(int fromClient , Packet packet)
+        {
+            if (!Server.clients[fromClient].isTokenChecked)
+            {
+                Server.clients[fromClient].tcp.Disconnect();
+                return;
+            }
+
+
+        }
     }
 }
