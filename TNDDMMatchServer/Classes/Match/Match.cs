@@ -49,6 +49,20 @@ namespace TNDDMMatchServer
 
             return isCorrect;
         }
+
+        public void SetReady(string playerUUID)
+        {
+            foreach (Team team in teams)
+            {
+                foreach (Player player in team.Players)
+                {
+                    if (String.Equals(player.UUID, playerUUID))
+                    {
+                        player.IsReady = true;
+                    }
+                }
+            }
+        }
         // TODO: START A GAME AND STUFF
     }
 }

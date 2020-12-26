@@ -10,6 +10,20 @@ namespace TNDDMMatchServer.Classes.GameScripts
 
         CrestPool crestPool;
 
+        bool isReady = false;
+
+        public bool IsReady
+        {
+            get
+            {
+                return isReady;
+            }
+            set
+            {
+                isReady = value;
+            }
+        }
+
         public Player(PlayerLoginData playerLoginData)
         {
             playerData = playerLoginData;

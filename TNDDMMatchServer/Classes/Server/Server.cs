@@ -66,7 +66,7 @@ namespace TNDDMMatchServer
                 {(int)ClientPackets.MoveAgent , ServerHandle.MoveAgent },
                 {(int)ClientPackets.Attack , ServerHandle.Attack },
                 {(int)ClientPackets.EndTurn , ServerHandle.EndTurn },
-                {(int)ClientPackets.Roll , ServerHandle.Roll },
+                {(int)ClientPackets.Roll , ServerHandle.Roll }
             };
         }
     }
