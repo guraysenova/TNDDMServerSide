@@ -11,6 +11,8 @@ namespace TNDDMMatchServer
         MatchData matchData = null;
         public Game Game { get; }
 
+        bool matchStarted = false;
+
         public Match(string roomUUID , string playerOneUUID , string playerOneToken , string playerOneName, string playerTwoUUID, string playerTwoToken, string playerTwoName)
         {
             matchData = new MatchData(roomUUID);
@@ -62,6 +64,47 @@ namespace TNDDMMatchServer
                     }
                 }
             }
+            if (IsMatchReady() && !matchStarted)
+            {
+                MatchStart();
+            }
+        }
+
+        bool IsMatchReady()
+        {
+            foreach (Team team in teams)
+            {
+                foreach (Player player in team.Players)
+                {
+                    if (!player.IsReady)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        void MatchStart()
+        {
+            if (matchStarted)
+            {
+                return;
+            }
+            foreach (var team in teams)
+            {
+                foreach (var player in team.Players)
+                {
+                    for (int i = 0; i < Server.clients.Count; i++)
+                    {
+                        if (Server.clients[i].clientUUID.Equals(player.UUID))
+                        {
+                            ServerSend.MatchStarted(i, (int)player.TeamEnum, (int)player.PlayerEnum);
+                        }
+                    }
+                }
+            }
+            matchStarted = true;
         }
         // TODO: START A GAME AND STUFF
     }

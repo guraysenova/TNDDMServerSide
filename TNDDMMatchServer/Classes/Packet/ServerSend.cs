@@ -31,11 +31,12 @@
             }
         }
 
-        public static void MatchStarted(int toClient , int clientOrder)
+        public static void MatchStarted(int toClient ,int teamEnum ,int playerEnum)
         {
             using (Packet packet = new Packet((int)ServerPackets.MatchStarted))
             {
-                packet.Write(clientOrder);
+                packet.Write(teamEnum);
+                packet.Write(playerEnum);
                 SendTCPData(toClient, packet);
             }
         }
