@@ -1,4 +1,5 @@
 ﻿namespace TNDDMMatchServer.Classes.GameScripts
+{ 
     public enum Direction
     {
         Up = 0,
