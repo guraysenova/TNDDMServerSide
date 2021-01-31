@@ -1,4 +1,6 @@
-﻿namespace TNDDMMatchServer
+﻿using System.Collections.Generic;
+
+namespace TNDDMMatchServer
 {
     class ServerSend
     {
@@ -31,12 +33,24 @@
             }
         }
 
-        public static void MatchStarted(int toClient ,int teamEnum ,int playerEnum)
+        public static void MatchStarted(int toClient ,int teamEnum ,int playerEnum , List<Classes.GameScripts.Team> teams)
         {
             using (Packet packet = new Packet((int)ServerPackets.MatchStarted))
             {
                 packet.Write(teamEnum);
                 packet.Write(playerEnum);
+                packet.Write(toClient);
+                packet.Write(teams.Count);
+                for (int i = 0; i < teams.Count; i++)
+                {
+                    packet.Write(teams[i].Players.Count);
+                    for (int j = 0; j < teams[i].Players.Count; j++)
+                    {
+                        packet.Write((int)teams[i].Players[j].TeamEnum);
+                        packet.Write((int)teams[i].Players[j].PlayerEnum);
+                        packet.Write(teams[i].Players[j].ID);
+                    }
+                }
                 SendTCPData(toClient, packet);
             }
         }

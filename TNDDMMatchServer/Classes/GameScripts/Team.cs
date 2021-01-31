@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace TNDDMMatchServer.Classes.GameScripts
 {
@@ -13,11 +11,13 @@ namespace TNDDMMatchServer.Classes.GameScripts
         public Team(List<Player> players , TeamEnum team)
         {
             this.players = players;
+            this.teamEnum = team;
         }
 
         public Team(Player player, TeamEnum team)
         {
             this.players = new List<Player>() { player };
+            this.teamEnum = team;
         }
 
         public List<Player> Players
@@ -25,6 +25,14 @@ namespace TNDDMMatchServer.Classes.GameScripts
             get
             {
                 return players;
+            }
+        }
+
+        public TeamEnum TeamEnum
+        {
+            get
+            {
+                return teamEnum;
             }
         }
     }

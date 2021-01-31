@@ -52,7 +52,7 @@ namespace TNDDMMatchServer
             return isCorrect;
         }
 
-        public void SetReady(string playerUUID)
+        public void SetReady(string playerUUID , int id)
         {
             foreach (Team team in teams)
             {
@@ -60,6 +60,7 @@ namespace TNDDMMatchServer
                 {
                     if (String.Equals(player.UUID, playerUUID))
                     {
+                        player.ID = id;
                         player.IsReady = true;
                     }
                 }
@@ -99,7 +100,7 @@ namespace TNDDMMatchServer
                     {
                         if (Server.clients[i].clientUUID.Equals(player.UUID))
                         {
-                            ServerSend.MatchStarted(i, (int)player.TeamEnum, (int)player.PlayerEnum);
+                            ServerSend.MatchStarted(i, (int)player.TeamEnum, (int)player.PlayerEnum , teams);
                         }
                     }
                 }

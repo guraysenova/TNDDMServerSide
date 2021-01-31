@@ -37,7 +37,7 @@ namespace TNDDMMatchServer
                 return;
             }
 
-            MatchServer.Match.SetReady(Server.clients[fromClient].clientUUID);
+            MatchServer.Match.SetReady(Server.clients[fromClient].clientUUID , fromClient);
 
         }
 

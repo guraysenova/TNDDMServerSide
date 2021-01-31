@@ -10,6 +10,8 @@ namespace TNDDMMatchServer.Classes.GameScripts
 
         CrestPool crestPool;
 
+        public int ID { get; set; }
+
         bool isReady = false;
 
         public bool IsReady
