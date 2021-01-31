@@ -36,13 +36,13 @@ namespace TNDDMMatchServer.Classes.GameScripts.BoardScripts
         public Board(TwoDCoordinate _boardSize)
         {
             tileData = new List<TileData>();
+            pathFinder = new PathFinder();
             boardSize = _boardSize;
             BoardInit();
             pathFinder.SetGrid(tileData, boardSize);
             battleCalculator = new BattleCalculator();
             unfoldDataManager = new DiceUnfoldDataManager();
             agents = new List<Agent>();
-            pathFinder = new PathFinder();
         }
 
         void BoardInit()

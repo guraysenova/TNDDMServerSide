@@ -20,6 +20,7 @@ namespace TNDDMMatchServer
             if (TokenManager.IsTokenValid(clientGivenRoomUUID, clientUUID, token))
             {
                 Server.clients[fromClient].isTokenChecked = true;
+                Server.clients[fromClient].clientUUID = clientUUID;
                 Console.WriteLine("User connected with the correct token");
             }
             else
@@ -31,12 +32,13 @@ namespace TNDDMMatchServer
 
         public static void Ready(int fromClient , Packet packet)
         {
+            Console.WriteLine(fromClient + "is ready?");
             if (!Server.clients[fromClient].isTokenChecked)
             {
                 Server.clients[fromClient].tcp.Disconnect();
                 return;
             }
-
+            Console.WriteLine(fromClient + "is ready");
             MatchServer.Match.SetReady(Server.clients[fromClient].clientUUID , fromClient);
 
         }

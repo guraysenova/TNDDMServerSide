@@ -18,7 +18,7 @@ namespace TNDDMMatchServer.Classes.GameScripts.GameData
 
         public GameDataReader()
         {
-            string json = File.ReadAllText(@"C:\Users\Guray\Documents\Projects\Guray\TNDDMServerSide\TNDDMMatchServer\Classes\Game\GameData\DataSamples.json");
+            string json = File.ReadAllText(@"C:\Users\Guray\Documents\Projects\Guray\TNDDMServerSide\TNDDMMatchServer\Classes\GameScripts\GameData\DataSamples.json");
             gameData = JsonConvert.DeserializeObject<GameData>(json);
             foreach (Monster monster in gameData.Monsters)
             {

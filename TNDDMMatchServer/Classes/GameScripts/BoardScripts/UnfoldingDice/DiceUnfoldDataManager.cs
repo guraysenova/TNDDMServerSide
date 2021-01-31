@@ -10,7 +10,7 @@ namespace TNDDMMatchServer.Classes.GameScripts.BoardScripts.UnfoldingDice
 
         public DiceUnfoldDataManager()
         {
-            string json = File.ReadAllText(@"C:\Users\Guray\Documents\Projects\Guray\TNDDMServerSide\TNDDMMatchServer\Classes\Game\Board\UnfoldingDice\DiceUnfoldDatas.json");
+            string json = File.ReadAllText(@"C:\Users\Guray\Documents\Projects\Guray\TNDDMServerSide\TNDDMMatchServer\Classes\GameScripts\BoardScripts\UnfoldingDice\DiceUnfoldDatas.json");
             diceUnfoldingDatas = JsonConvert.DeserializeObject<DiceUnfoldDatas>(json);
         }
 
